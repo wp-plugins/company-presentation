@@ -4,7 +4,7 @@
  */
 /*
 Plugin Name: Careerpages
-Plugin URI: http://prodii.com/appendix
+Plugin URI: http://prodii.com/wordpress/plugins/careerpages.php
 Description: The ultimative easiest way to present you company.
 Version: 1.0.0
 Author: Prodii by Ralph Rezende Larsen
