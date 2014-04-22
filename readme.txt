@@ -41,7 +41,7 @@ Future features in Prodii's Company and Team presentation plugin include:
 * More templates and themes coming up soon
 * Map visualizations
 
-PS: You'll need a [Prodii TEAM API key] (http://prodii.com/WpPluginInfo.php) to use this plugin. Demo keys are free of charge for 1 month, afterwards [you need to subscribe] (http://prodii.com/PricesInfo).
+PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use this plugin. Demo keys are free of charge for 1 month, afterwards [you need to subscribe](http://prodii.com/PricesInfo).
 
 == Installation ==
 
