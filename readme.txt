@@ -15,7 +15,8 @@ Prodii collects data for you from multiple medias to integrate with your persona
 Prodii Company and Career Page enables easy profiling of your company, teams and employers in no time.
 Prodii lets you organize teams and invite teammembers, and instantly integrate teams with your company or personal homepage.
 
-NB! Please read carefully before you install: 
+NB! Please read carefully before you install:
+
 * You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use this plug-in. Keys are free for personal blogs, with paid subscriptions available for businesses and commercial sites.
 * Please make sure you have the newest version of WP installed.
 * Follow instructions on "screenshots" or on our [Help page](http://prodii.com/WpPluginInfo).
