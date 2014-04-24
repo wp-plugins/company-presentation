@@ -1,0 +1,8 @@
+/*!
+ * We made this namespace in order to avoid class name conflicts
+ */
+
+.bootstrap {
+    @import url("bootstrap-theme.min.css");
+    @import url("bootstrap.min.css");
+}
