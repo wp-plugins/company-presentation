@@ -30,7 +30,7 @@ With a Prodii team owner account (or  demo account for test purposes), you can c
 Prodii lets you organize teams and invite teammembers, and instantly integrate teams with your company or personal homepage.
 The presentation on your site holds of up to 3 page levels. Depending on wich template and theme you have selected, your company profile page will consist of a Company, a Team and a Profile view. 
 
-= Major features in Prodii's Company and Team presentation plugin 1.0 include =
+= Major features in Prodii's Company, Team and People presentation plugin include =
 
 * Responsive Company presentation in 3 levels
 * Responsive Team presentation in 2 levels
