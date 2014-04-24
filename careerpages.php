@@ -26,6 +26,7 @@ if (!class_exists("CareerpagesMain")) {
 				if (stripos($post->post_content, '[careerpages') !== false) {
 					wp_register_style('careerpages_bootstrap', plugins_url('css/bootstrap.min.css' , __FILE__ ));
 					wp_register_style('careerpages_bootstrap_theme', plugins_url('css/bootstrap-theme.min.css' , __FILE__ ));
+					//wp_register_style('careerpages_bootstrap', plugins_url('css/bootstrap-namespace.css' , __FILE__ ));
 					wp_register_script('careerpages_googlemap_infobox', plugins_url('js/infobox.js' , __FILE__ ), array(), '1.0');
 					wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
 					if (stripos($post->post_content, 'subdir="') !== false) {
@@ -121,7 +122,8 @@ if (isset($careerpagesMain)) {
 	// the_posts gets triggered before wp_head
 	add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 1);
 
-	add_action('wp_head', array(&$careerpagesMain, 'addHeaderCode'), 1);
+	//add_action('wp_head', array(&$careerpagesMain, 'addHeaderCode'), 15);
+	add_action('wp_enqueue_scripts', array(&$careerpagesMain, 'addHeaderCode'), 111115);
 	
 	add_shortcode('careerpages', array('careerpagesMain', 'careerpages_shortcut'));
 }

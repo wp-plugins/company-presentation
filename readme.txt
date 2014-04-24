@@ -3,7 +3,7 @@ Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
 Requires at least: 3.0.1
 Tested up to: 3.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,3 +76,16 @@ PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use t
 
 = 1.0.0 =
 * Initial release
+
+= 1.0.1 =
+* Problem with navigation with some themes resolved
+
+= Known issues with themes =
+We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row, col and container. This produces problems with some themes, that also uses these classnames.
+In order to solve this problem, we have been looking for a way to isolate our plugin css or maybe quit bootstrap.
+Following theme is known to have this problem: Presscore
+Please leave a note if you have more issues
+
+= Known issues with other plugins =
+Pricing table plugin produces a visible error (the error is there anyway) when our plugin is activated.
+
