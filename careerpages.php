@@ -6,7 +6,7 @@
 Plugin Name: Careerpages
 Plugin URI: http://prodii.com/wordpress/plugins/careerpages.php
 Description: The ultimative easiest way to present you company.
-Version: 1.0.0
+Version: 1.0.1
 Author: Prodii by Ralph Rezende Larsen
 Author URI: http://prodii.com/view/Ralph+Rezende+Larsen
 License:
