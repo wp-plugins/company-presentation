@@ -83,7 +83,7 @@ PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use t
 = Known issues with themes =
 We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row, col and container. This produces problems with some themes, that also uses these classnames.
 In order to solve this problem, we have been looking for a way to isolate our plugin css or maybe quit bootstrap.
-Following theme is known to have this problem: Presscore
+Following themes is known to have this problem: Presscore.
 Please leave a note if you have more issues
 
 = Known issues with other plugins =
