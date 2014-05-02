@@ -68,9 +68,9 @@ PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use t
 
 == Screenshots ==
 
-1. Company level 
-2. Team level
-3. Person level
+1. Company level sample 
+2. Team level sample
+3. Person level sample
 
 == Changelog ==
 
