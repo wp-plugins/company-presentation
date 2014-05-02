@@ -70,7 +70,7 @@ PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use t
 
 1. Company level sample 
 2. Team level sample
-3. Person level sample
+3. Profile level sample
 
 == Changelog ==
 
