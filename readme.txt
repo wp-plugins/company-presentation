@@ -3,7 +3,7 @@ Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
 Requires at least: 3.0.1
 Tested up to: 3.9
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use t
 
 = 1.0.1 =
 * Problem with navigation with some themes resolved
+
+= 1.0.2 =
+* Deprecated functioncall problem, resolved
 
 = Known issues with themes =
 We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row", "col" and "container". This produces problems with some themes, that also uses these classnames.
