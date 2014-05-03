@@ -74,14 +74,14 @@ PS: You'll need a [Prodii TEAM API KEY](http://prodii.com/WpPluginInfo) to use t
 
 == Changelog ==
 
-= 1.0.0 =
-* Initial release
+= 1.0.2 =
+* Deprecated functioncall problem, resolved
 
 = 1.0.1 =
 * Problem with navigation with some themes resolved
 
-= 1.0.2 =
-* Deprecated functioncall problem, resolved
+= 1.0.0 =
+* Initial release
 
 = Known issues with themes =
 We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row", "col" and "container". This produces problems with some themes, that also uses these classnames.
