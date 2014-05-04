@@ -92,6 +92,7 @@ Following themes is known to have this problem: Presscore.
 Please leave a note if you have more issues
 
 = Known issues with other plugins =
+None
 
 Please leave a note if you have more issues
 
