@@ -92,7 +92,6 @@ Following themes is known to have this problem: Presscore.
 Please leave a note if you have more issues
 
 = Known issues with other plugins =
-Pricing table plugin produces a visible error (the error is there anyway) when our plugin is activated. New update of Pricing table plugin is coming up soon.
 
 Please leave a note if you have more issues
 
