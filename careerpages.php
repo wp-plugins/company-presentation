@@ -11,8 +11,6 @@ Author: Prodii by Ralph Rezende Larsen
 Author URI: http://prodii.com/view/Ralph+Rezende+Larsen
 License:
 */
-//ini_set('display_errors', '1');
-//ini_set('error_reporting', E_ALL);
 
 if (!class_exists("CareerpagesMain")) {
 	class CareerpagesMain {
