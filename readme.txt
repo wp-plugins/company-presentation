@@ -2,8 +2,8 @@
 Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
 Requires at least: 3.0.1
-Tested up to: 3.9
-Stable tag: 1.0.2
+Tested up to: 4.0
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,9 @@ PS: You'll need a [Prodii TEAM API KEY](https://prodii.com/WpPluginInfo) to use 
 3. Profile level sample
 
 == Changelog ==
+
+= 1.0.3 =
+* Prodii and Carrer pages now on secure server (SSL - Secure Sockets Layer)
 
 = 1.0.2 =
 * Deprecated functioncall problem, resolved
