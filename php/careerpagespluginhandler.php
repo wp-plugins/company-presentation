@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-header("content-type: text/plain; Charset: utf-8");
+header("content-type: text/html; Charset: utf-8");
 setlocale(LC_ALL, "en_GB");
 
 $action = $_POST['action']; 
@@ -18,7 +18,8 @@ if ($action == "getTeamsHtml") {
 function careerpages($level, $template, $key, $ids, $subdir) {
 		// create curl resource 
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, "http://".($subdir ? $subdir."." : "")."prodii.com/CareerPages/".$level."/Html/".$template."/".$key."/".$ids); 
+        curl_setopt($ch, CURLOPT_URL, "https://".($subdir ? $subdir."." : "")."prodii.com/CareerPages/".$level."/Html/".$template."/".$key."/".$ids); 
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
         $output = json_decode(curl_exec($ch)); 
         curl_close($ch);
