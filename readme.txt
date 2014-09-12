@@ -74,9 +74,6 @@ PS: You'll need a [Prodii TEAM API KEY](https://prodii.com/WpPluginInfo) to use 
 
 == Changelog ==
 
-= 1.0.3 =
-* Prodii and Career-pages now on secure server (SSL - Secure Sockets Layer)
-
 = 1.0.2 =
 * Deprecated functioncall problem, resolved
 
