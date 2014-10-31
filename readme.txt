@@ -3,7 +3,7 @@ Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
 Requires at least: 3.0.1
 Tested up to: 4.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,12 @@ PS: You'll need a [Prodii TEAM API KEY](https://prodii.com/WpPluginInfo) to use 
 3. Profile level sample
 
 == Changelog ==
+
+= 2.0.2 =
+* Calls to the Prodii API is now posted instead of getted
+* Issue with breadcrumbs resolved
+* All images now have a fixed width/height ratio, wich make the presentaion look nicer
+
 
 = 2.0.1 =
 * Font Awesome elements added to the infographics
