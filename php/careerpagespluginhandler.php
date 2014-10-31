@@ -6,7 +6,6 @@ setlocale(LC_ALL, "en_GB");
 $action = $_POST['action']; 
 
 if ($action == "getTeamsHtml") {
-	//echo json_encode(careerpages($action, "teams", $_POST['template'], $_POST['key'], $_POST['teams'], $_POST['subdir'], array($_POST['teams'], 0, 0)));
 	echo json_encode(careerpages($action, "teams", $_POST['template'], $_POST['key'], $_POST['teams'], $_POST['subdir'], $_POST['breadcrumbs']));
 
 } elseif ($action == "getTeamHtml") {
@@ -23,6 +22,7 @@ function careerpages($action, $level, $template, $key, $ids, $subdir, $breadcrum
 		'key' => urlencode($key),
 		$level => urlencode($ids),
 		'template' => urlencode($template),
+		'subdir' => urlencode($subdir),
 		'breadcrumbs' => $breadcrumbs
 	);
 	
