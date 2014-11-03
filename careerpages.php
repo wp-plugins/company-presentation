@@ -6,7 +6,7 @@
 Plugin Name: Careerpages
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present you company.
-Version: 2.0.1
+Version: 2.0.3
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/Ralph+Rezende+Larsen
 License:
@@ -48,7 +48,8 @@ if (!class_exists("CareerpagesMain")) {
 					wp_register_script('careerpages_expander', plugins_url('js/jquery.expander.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
 					wp_register_script('careerpages_awesomecloud', plugins_url('js/jquery.awesomeCloud-0.2.min.js' , __FILE__ ), array(), '1.0');
 					wp_register_script('careerpages_bootstrap', plugins_url('js/bootstrap.min.js' , __FILE__ ), array(), '1.0');
-					wp_register_script('careerpages_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/wordpress_plugin/js/careerpagesplugin.js', array(), '1.0');
+					wp_register_script('careerpages_callback_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages_wp_callbackurl.js', array(), '1.0');
+					wp_register_script('careerpages_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages.js', array(), '1.0');
 					wp_register_script('careerpages_library', 'https://'.($subdir ? $subdir."." : "").'prodii.com/assets/js/library.js', array(), '1.0');
 
 					break;
@@ -78,6 +79,7 @@ if (!class_exists("CareerpagesMain")) {
 				wp_enqueue_script('careerpages_expander');
 				wp_enqueue_script('careerpages_awesomecloud');
 				wp_enqueue_script('careerpages_bootstrap');
+				wp_enqueue_script('careerpages_callback_script');
 				wp_enqueue_script('careerpages_script');
 				wp_enqueue_script('careerpages_library');
 				wp_enqueue_script('careerpages_googlemap_places');
@@ -87,13 +89,31 @@ if (!class_exists("CareerpagesMain")) {
 
 		function addContent($content = '') {
 		}
-
+		
 		function careerpages_shortcut($atts) {
+			//set POST variables
+			$fields = array(
+				'action' => 'get'.$atts["level"].'Html',
+				'key' => $atts["key"],
+				strtolower($atts["level"]) => $atts["ids"],
+				'template' => $atts["template"],
+				'subdir' => $atts["subdir"]
+			);
+			
 			$ch = curl_init(); 
-			curl_setopt($ch, CURLOPT_URL, "https://".(isset($atts["subdir"]) ? $atts["subdir"]."." : "")."prodii.com/CareerPages/".$atts["level"]."/Html/".$atts["template"]."/".$atts["key"]."/".$atts["ids"]); 
+			curl_setopt($ch, CURLOPT_URL, "https://".($subdir ? $subdir."." : "")."prodii.com/common/careerpages/careerpageshandler.php"); 
+			curl_setopt($ch, CURLOPT_POST, count($fields));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-			$output = json_decode(curl_exec($ch)); 
+			$output = curl_exec($ch); 
+
+			if($errno = curl_errno($ch)) {
+				$output = "cURL error ({$errno}):\n {$error_message}";
+			} else {
+				$output = json_decode($output);
+			}
+
 			curl_close($ch);
 
 			$content = 	'

@@ -18,15 +18,14 @@ if ($action == "getTeamsHtml") {
 function careerpages($action, $level, $template, $key, $ids, $subdir, $breadcrumbs) {
 	//set POST variables
 	$fields = array(
-		'action' => urlencode($action),
-		'key' => urlencode($key),
-		$level => urlencode($ids),
-		'template' => urlencode($template),
-		'subdir' => urlencode($subdir),
+		'action' => $action,
+		'key' => $key,
+		$level => $ids,
+		'template' => $template,
+		'subdir' => $subdir,
 		'breadcrumbs' => $breadcrumbs
 	);
-	
-	// create curl resource 
+
 	$ch = curl_init(); 
 	curl_setopt($ch, CURLOPT_URL, "https://".($subdir ? $subdir."." : "")."prodii.com/common/careerpages/careerpageshandler.php"); 
 	curl_setopt($ch, CURLOPT_POST, count($fields));
