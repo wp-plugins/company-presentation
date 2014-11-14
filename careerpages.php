@@ -6,7 +6,7 @@
 Plugin Name: Careerpages
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present you company.
-Version: 2.0.3
+Version: 2.0.4
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/Ralph+Rezende+Larsen
 License:
@@ -15,6 +15,15 @@ License:
 if (!class_exists("CareerpagesMain")) {
 	class CareerpagesMain {
 		function CareerpagesMain() {
+		}
+	
+		function cp_js_variables(){
+				?>
+				<script>
+					//var cp_ajaxuri = <?php echo json_encode(plugins_url('php/careerpagespluginhandler.php' , __FILE__ )) ?>;
+					var cp_ajaxuri = <?php echo 'HejsaCP'; ?>;
+				</script>
+				<?php
 		}
 
 		function conditionally_add_scripts_and_styles($posts){
@@ -80,6 +89,7 @@ if (!class_exists("CareerpagesMain")) {
 				wp_enqueue_script('careerpages_awesomecloud');
 				wp_enqueue_script('careerpages_bootstrap');
 				wp_enqueue_script('careerpages_callback_script');
+				wp_localize_script( 'careerpages_callback_script', 'CP', array('ajaxhandler' => plugins_url('php/careerpagespluginhandler.php' , __FILE__ )));
 				wp_enqueue_script('careerpages_script');
 				wp_enqueue_script('careerpages_library');
 				wp_enqueue_script('careerpages_googlemap_places');
@@ -138,10 +148,7 @@ if (class_exists("CareerpagesMain")) {
 if (isset($careerpagesMain)) {
 	// the_posts gets triggered before wp_head
 	add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 1);
-
-	//add_action('wp_head', array(&$careerpagesMain, 'addHeaderCode'), 15);
 	add_action('wp_enqueue_scripts', array(&$careerpagesMain, 'addHeaderCode'), 111115);
-	
 	add_shortcode('careerpages', array('careerpagesMain', 'careerpages_shortcut'));
 }
 
