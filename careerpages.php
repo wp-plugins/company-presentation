@@ -6,7 +6,7 @@
 Plugin Name: Careerpages
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present you company.
-Version: 2.0.4
+Version: 2.0.5
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/Ralph+Rezende+Larsen
 License:
@@ -31,6 +31,9 @@ if (!class_exists("CareerpagesMain")) {
 			foreach ($posts as $post) {
 				$subdir = null;
 				if (stripos($post->post_content, '[careerpages') !== false) {
+					$startpos = stripos($post->post_content, 'template="') + 10;
+					$template = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+					
 					// IE10 viewport hack for Surface/desktop Windows 8 bug
 					wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ), array(), '1.0');
 
@@ -50,8 +53,6 @@ if (!class_exists("CareerpagesMain")) {
 						wp_register_style('careerpages_style', $css);
 
 					} else {
-						$startpos = stripos($post->post_content, 'template="') + 10;
-						$template = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 						wp_register_style('careerpages_style', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplatedefault.css');
 					}
 					wp_register_script('careerpages_expander', plugins_url('js/jquery.expander.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
@@ -59,6 +60,7 @@ if (!class_exists("CareerpagesMain")) {
 					wp_register_script('careerpages_bootstrap', plugins_url('js/bootstrap.min.js' , __FILE__ ), array(), '1.0');
 					wp_register_script('careerpages_callback_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages_wp_callbackurl.js', array(), '1.0');
 					wp_register_script('careerpages_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages.js', array(), '1.0');
+					wp_register_script('careerpages_template_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplate.js', array(), '1.0');
 					wp_register_script('careerpages_library', 'https://'.($subdir ? $subdir."." : "").'prodii.com/assets/js/library.js', array(), '1.0');
 
 					break;
@@ -91,6 +93,7 @@ if (!class_exists("CareerpagesMain")) {
 				wp_enqueue_script('careerpages_callback_script');
 				wp_localize_script( 'careerpages_callback_script', 'CP', array('ajaxhandler' => plugins_url('php/careerpagespluginhandler.php' , __FILE__ )));
 				wp_enqueue_script('careerpages_script');
+				wp_enqueue_script('careerpages_template_script');
 				wp_enqueue_script('careerpages_library');
 				wp_enqueue_script('careerpages_googlemap_places');
 				wp_enqueue_script('careerpages_googlemap_infobox');
