@@ -55,7 +55,7 @@ if (!class_exists("CareerpagesMain")) {
 						wp_register_style('careerpages_style', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplatedefault.css');
 					}
 					//wp_register_script('careerpages_expander', plugins_url('js/jquery.expander.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
-					wp_register_script('careerpages_ellipsis', plugins_url('js/jquery.ellipsis.min.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
+					wp_register_script('careerpages_ellipsis', 'https://'.($subdir ? $subdir."." : "").'prodii.com/assets/js/jquery.ellipsis.min.js', array(), '1.0');
 					wp_register_script('careerpages_awesomecloud', plugins_url('js/jquery.awesomeCloud-0.2.min.js' , __FILE__ ), array(), '1.0');
 					//wp_register_script('careerpages_bootstrap', plugins_url('js/bootstrap.min.js' , __FILE__ ), array(), '1.0');
 					wp_register_script('careerpages_callback_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages_wp_callbackurl.js', array(), '1.0');
