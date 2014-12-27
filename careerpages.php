@@ -38,9 +38,8 @@ if (!class_exists("CareerpagesMain")) {
 					wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ), array(), '1.0');
 
 					wp_register_style('careerpages_awesomefonts', plugins_url('css/font-awesome.min.css' , __FILE__ ));
-					wp_register_style('careerpages_bootstrap', plugins_url('css/bootstrap.min.css' , __FILE__ ));
-					wp_register_style('careerpages_bootstrap', plugins_url('css/bootstrap.min.css' , __FILE__ ));
-					wp_register_style('careerpages_bootstrap_theme', plugins_url('css/bootstrap-theme.min.css' , __FILE__ ));
+					//wp_register_style('careerpages_bootstrap', plugins_url('css/bootstrap.min.css' , __FILE__ ));
+					//wp_register_style('careerpages_bootstrap_theme', plugins_url('css/bootstrap-theme.min.css' , __FILE__ ));
 					wp_register_script('careerpages_googlemap_infobox', plugins_url('js/infobox.js' , __FILE__ ), array(), '1.0');
 					wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
 					if (stripos($post->post_content, 'subdir="') !== false) {
@@ -55,9 +54,10 @@ if (!class_exists("CareerpagesMain")) {
 					} else {
 						wp_register_style('careerpages_style', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplatedefault.css');
 					}
-					wp_register_script('careerpages_expander', plugins_url('js/jquery.expander.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
+					//wp_register_script('careerpages_expander', plugins_url('js/jquery.expander.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
+					wp_register_script('careerpages_ellipsis', plugins_url('js/jquery.ellipsis.min.js' , __FILE__ ), array('jquery-ui-core'), '1.0');
 					wp_register_script('careerpages_awesomecloud', plugins_url('js/jquery.awesomeCloud-0.2.min.js' , __FILE__ ), array(), '1.0');
-					wp_register_script('careerpages_bootstrap', plugins_url('js/bootstrap.min.js' , __FILE__ ), array(), '1.0');
+					//wp_register_script('careerpages_bootstrap', plugins_url('js/bootstrap.min.js' , __FILE__ ), array(), '1.0');
 					wp_register_script('careerpages_callback_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages_wp_callbackurl.js', array(), '1.0');
 					wp_register_script('careerpages_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages.js', array(), '1.0');
 					wp_register_script('careerpages_template_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplate.js', array(), '1.0');
@@ -76,8 +76,8 @@ if (!class_exists("CareerpagesMain")) {
 				echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 
 				wp_enqueue_style('careerpages_awesomefonts');
-				wp_enqueue_style('careerpages_bootstrap');
-				wp_enqueue_style('careerpages_bootstrap_theme');
+				//wp_enqueue_style('careerpages_bootstrap');
+				//wp_enqueue_style('careerpages_bootstrap_theme');
 				wp_enqueue_style('careerpages_style');
 
 				wp_enqueue_script('careerpages_viewportbug');
@@ -87,11 +87,12 @@ if (!class_exists("CareerpagesMain")) {
 								<script type="text/javascript" src="'.plugins_url('js/respond.min.js' , __FILE__ ).'"></script>
 							<![endif]-->
 							';
-				wp_enqueue_script('careerpages_expander');
+				//wp_enqueue_script('careerpages_expander');
+				wp_enqueue_script('careerpages_ellipsis');
 				wp_enqueue_script('careerpages_awesomecloud');
-				wp_enqueue_script('careerpages_bootstrap');
+				//wp_enqueue_script('careerpages_bootstrap');
 				wp_enqueue_script('careerpages_callback_script');
-				wp_localize_script( 'careerpages_callback_script', 'CP', array('ajaxhandler' => plugins_url('php/careerpagespluginhandler.php' , __FILE__ )));
+				wp_localize_script('careerpages_callback_script', 'CP', array('ajaxhandler' => plugins_url('php/careerpagespluginhandler.php' , __FILE__ )));
 				wp_enqueue_script('careerpages_script');
 				wp_enqueue_script('careerpages_template_script');
 				wp_enqueue_script('careerpages_library');
