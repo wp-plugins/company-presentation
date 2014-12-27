@@ -136,7 +136,7 @@ if (!class_exists("CareerpagesMain")) {
 									<input id="teamid" type="hidden" value="'.($atts["level"] == "Team" ? $atts["ids"] : "0").'"/>
 									<input id="profileid" type="hidden" value="'.($atts["level"] == "Profile" ? $atts["ids"] : "0").'"/>
 									'.(isset($atts["css"]) && $atts["css"] ? '<input id="css" type="hidden" value="'.$atts["css"].'"/>' : '<input id="css" type="hidden" value="careerpagestemplatedefault.css"/>').'
-									<div id="careerpagescontent" class="careerpagescontent container">'.$output.'</div>
+									<div id="careerpagescontent" class="prd-container">'.$output.'</div>
 									';
 			
 			return $content;
