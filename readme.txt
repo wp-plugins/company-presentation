@@ -1,7 +1,7 @@
 === Company, Team and People presentation ===
 Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
-Requires at least: 3.0.1
+Requires at least: 3.4.0
 Tested up to: 4.0
 Stable tag: 2.0.5
 License: GPLv2 or later
