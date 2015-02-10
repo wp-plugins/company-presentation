@@ -1,9 +1,9 @@
 === Company, Team and People presentation ===
 Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
-Requires at least: 3.4.0
+Requires at least: 3.0.1
 Tested up to: 4.0
-Stable tag: 2.0.5
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,10 @@ PS: You'll need a [Prodii TEAM API KEY](https://prodii.com/WpPluginInfo) to use 
 3. Profile level sample
 
 == Changelog ==
+
+= 3.0.0 =
+* Template runned from customers server is now possible, just by uploading your template to the Company Presentation plugin's newly added "templates"-folder.
+* Company Presentation plugin, detects if a certain template exists on the customers server. If exists, the template on the customers server is used, othervice the plugin tries to find the template on Prodii's server.
 
 = 2.0.5 =
 * Template Copenhagen is now fully responsive.
