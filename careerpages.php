@@ -1,142 +1,97 @@
 <?php
-/**
- * @package careerpages
- */
-/*
-Plugin Name: Careerpages
-Plugin URI: https://prodii.com/WpPluginInfo
-Description: The ultimative easiest way to present you company.
-Version: 2.0.5
-Author: Prodii by Ralph Rezende Larsen
-Author URI: https://prodii.com/view/Ralph+Rezende+Larsen
-License:
-*/
+require_once("careerpagesgui.php");
+require_once("careerpagesdata.php");
 
-if (!class_exists("CareerpagesMain")) {
-	class CareerpagesMain {
-		function CareerpagesMain() {
-		}
+class Careerpages {
 
-		function conditionally_add_scripts_and_styles($posts){
-			if (empty($posts)) return $posts;
-			foreach ($posts as $post) {
-				$subdir = null;
-				if (stripos($post->post_content, '[careerpages') !== false) {
-					$startpos = stripos($post->post_content, 'template="') + 10;
-					$template = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					
-					// IE10 viewport hack for Surface/desktop Windows 8 bug
-					wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ), array(), '1.0');
-
-					wp_register_style('careerpages_awesomefonts', plugins_url('css/font-awesome.min.css' , __FILE__ ));
-					wp_register_script('careerpages_googlemap_infobox', plugins_url('js/infobox.js' , __FILE__ ), array(), '1.0');
-					wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
-					if (stripos($post->post_content, 'subdir="') !== false) {
-						$startpos = stripos($post->post_content, 'subdir="') + 8;
-						$subdir = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					}
-					if (stripos($post->post_content, 'css="') !== false) {
-						$startpos = stripos($post->post_content, 'css="') + 5;
-						$css = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-						wp_register_style('careerpages_style', $css);
-
-					} else {
-						wp_register_style('careerpages_style', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplatedefault.css');
-					}
-					wp_register_script('careerpages_ellipsis', 'https://'.($subdir ? $subdir."." : "").'prodii.com/assets/js/jquery.ellipsis.min.js', array(), '1.0');
-					wp_register_script('careerpages_awesomecloud', plugins_url('js/jquery.awesomeCloud-0.2.min.js' , __FILE__ ), array(), '1.0');
-					wp_register_script('careerpages_callback_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages_wp_callbackurl.js', array(), '1.0');
-					wp_register_script('careerpages_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/js/careerpages.js', array(), '1.0');
-					wp_register_script('careerpages_template_script', 'https://'.($subdir ? $subdir."." : "").'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplate.js', array(), '1.0');
-					wp_register_script('careerpages_library', 'https://'.($subdir ? $subdir."." : "").'prodii.com/assets/js/library.js', array(), '1.0');
-
-					break;
-				}
-			}
-		 
-			return $posts;
-		}
-
-		function addHeaderCode() {
-			if (function_exists('wp_enqueue_script')) {
-				echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
-				echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-
-				wp_enqueue_style('careerpages_awesomefonts');
-				wp_enqueue_style('careerpages_style');
-
-				wp_enqueue_script('careerpages_viewportbug');
-				echo	'
-							<!--[if lt IE 9]>
-								<script type="text/javascript" src="'.plugins_url('js/html5shiv.js' , __FILE__ ).'"></script>
-								<script type="text/javascript" src="'.plugins_url('js/respond.min.js' , __FILE__ ).'"></script>
-							<![endif]-->
-							';
-				wp_enqueue_script('careerpages_ellipsis');
-				wp_enqueue_script('careerpages_awesomecloud');
-				wp_enqueue_script('careerpages_callback_script');
-				wp_localize_script('careerpages_callback_script', 'CP', array('ajaxhandler' => plugins_url('php/careerpagespluginhandler.php' , __FILE__ )));
-				wp_enqueue_script('careerpages_script');
-				wp_enqueue_script('careerpages_template_script');
-				wp_enqueue_script('careerpages_library');
-				wp_enqueue_script('careerpages_googlemap_places');
-				wp_enqueue_script('careerpages_googlemap_infobox');
-			}
-		}
-
-		function addContent($content = '') {
-		}
+	function __construct() {
+	}
+	
+	/*public static function getTeamsShowdata($teamids) {
+		$teamsdata = CareerpagesData::getCareerpageTeams($teamids);
 		
-		function careerpages_shortcut($atts) {
-			//set POST variables
-			$fields = array(
-				'action' => 'get'.$atts["level"].'Html',
-				'key' => $atts["key"],
-				strtolower($atts["level"]) => $atts["ids"],
-				'template' => $atts["template"],
-				'subdir' => $atts["subdir"]
-			);
-			
-			$ch = curl_init(); 
-			curl_setopt($ch, CURLOPT_URL, "https://".($subdir ? $subdir."." : "")."prodii.com/common/careerpages/careerpageshandler.php"); 
-			curl_setopt($ch, CURLOPT_POST, count($fields));
-			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-			$output = curl_exec($ch); 
+		return $teamsdata;
+	}*/
+	
+	public static function getTeamsData($teamids, $breadcrumbs) {
+		$teamsdata = CareerpagesData::getCareerpageTeams($teamids, CareerpagesData::getBreadcrumbData($breadcrumbs));
+		
+		return $teamsdata;
+	}
+	
+	public static function getTeamData($teamid, $breadcrumbs) {
+		$teamdata = CareerpagesData::getCareerpageTeam($teamid, CareerpagesData::getBreadcrumbData($breadcrumbs));
 
-			if($errno = curl_errno($ch)) {
-				$output = "cURL error ({$errno}):\n {$error_message}";
-			} else {
-				$output = json_decode($output);
-			}
+		return $teamdata;
+	}
+	
+	public static function getProfileData($profileid, $breadcrumbs) {
+		$profiledata = CareerpagesData::getCareerpageProfile($profileid, CareerpagesData::getBreadcrumbData($breadcrumbs));
 
-			curl_close($ch);
+		return $profiledata;
+	}
+	
+	public static function getTeamsHtml($teamids, $breadcrumbs) {
+		$teamsdata = CareerpagesData::getCareerpageTeams($teamids, CareerpagesData::getBreadcrumbData($breadcrumbs));
 
-			$content = 	'
-									<input id="subdir" type="hidden" value="'.(isset($atts["subdir"]) ? $atts["subdir"] : "").'"/>
-									<input id="template" type="hidden" value="'.$atts["template"].'"/>
-									<input id="teamids" type="hidden" value="'.($atts["level"] == "Teams" ? $atts["ids"] : "0").'"/>
-									<input id="teamid" type="hidden" value="'.($atts["level"] == "Team" ? $atts["ids"] : "0").'"/>
-									<input id="profileid" type="hidden" value="'.($atts["level"] == "Profile" ? $atts["ids"] : "0").'"/>
-									'.(isset($atts["css"]) && $atts["css"] ? '<input id="css" type="hidden" value="'.$atts["css"].'"/>' : '<input id="css" type="hidden" value="careerpagestemplatedefault.css"/>').'
-									<div id="careerpagescontent" class="prd-container">'.$output.'</div>
-									';
-			
-			return $content;
-		}
+		return CareerpagesGui::getTeamsHtml($teamsdata);
+	}
+	
+	public static function getTeamHtml($teamid, $breadcrumbs) {
+		$teamdata = CareerpagesData::getCareerpageTeam($teamid, CareerpagesData::getBreadcrumbData($breadcrumbs));
+		
+		return CareerpagesGui::getTeamHtml($teamdata);
+	}
+	
+	public static function getProfileHtml($profileid, $breadcrumbs) {
+		$profiledata = CareerpagesData::getCareerpageProfile($profileid, CareerpagesData::getBreadcrumbData($breadcrumbs));
+
+		return CareerpagesGui::getProfileHtml($profiledata);
+	}
+	
+	public static function getTeamsEmbed($teamids, $breadcrumbs) {
+		return CareerpagesGui::getTeamsEmbed($teamids, CareerpagesData::getBreadcrumbData($breadcrumbs));
+	}
+	
+	public static function getTeamEmbed($teamid, $breadcrumbs) {
+		return CareerpagesGui::getTeamEmbed($teamid, CareerpagesData::getBreadcrumbData($breadcrumbs));
+	}
+	
+	public static function getProfileEmbed($profileid, $breadcrumbs) {
+		return CareerpagesGui::getProfileEmbed($profileid, CareerpagesData::getBreadcrumbData($breadcrumbs));
+	}
+
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////                             /////////////////////////////////////////////////////////////////////////////
+/////////     Dashboard functions     /////////////////////////////////////////////////////////////////////////////
+/////////                             /////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static function getDashboardCareerpages($teamownerid, $templateid, $css, $teamsid, $teamid, $profileid) {
+		return CareerpagesGui::getDashboardCareerpagesGui($teamownerid, $templateid, $css, $teamsid, $teamid, $profileid);
+	}
+	
+	/*public static function getDeveloperCareerpages($templateid = 0, $css = "", $teamsid = 0, $teamid = 0, $profileid = 0) {
+		return CareerpagesGui::getDeveloperCareerpagesGui($templateid, $css, $teamsid, $teamid, $profileid);
+	}*/
+	
+	public static function getTeamowners() {
+		return CareerpagesData::getTeamowners();
+	}
+	
+	public static function getTeamowner() {
+		return CareerpagesData::getTeamowner();
+	}
+	
+	public static function getTemplates() {
+		return CareerpagesData::getTemplates();
+	}
+	
+	public static function getTeams($teamownerid) {
+		return CareerpagesData::getTeams($teamownerid);
 	}
 }
-
-if (class_exists("CareerpagesMain")) {
-	$careerpagesMain = new CareerpagesMain();
-}
-
-if (isset($careerpagesMain)) {
-	// the_posts gets triggered before wp_head
-	add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 1);
-	add_action('wp_enqueue_scripts', array(&$careerpagesMain, 'addHeaderCode'), 111115);
-	add_shortcode('careerpages', array('careerpagesMain', 'careerpages_shortcut'));
-}
-
 ?>
