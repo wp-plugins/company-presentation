@@ -262,13 +262,13 @@ class CareerpagesLibrary {
 			if($mediaid) {
 				$url = $imageurl;
 			} else {
-				$url = 'https://'.$cp_fix["subdir"].'.prodii.com/common/uploadimages/'.$imageurl;
+				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$imageurl;
 			}
 		} else {
 			if($cp_fix["local"]) {
 				$url = $cp_fix["localpluginurl"].'templates/'.$cp_fix["template"].'/images/'.$cp_fix["profileimgplaceholder"];
 			} else {
-				$url = 'https://'.$cp_fix["subdir"].'.prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["profileimgplaceholder"];
+				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["profileimgplaceholder"];
 			}
 		}
 		
@@ -279,12 +279,12 @@ class CareerpagesLibrary {
 		global $cp_fix;
 
 		if ($filename) {
-			$url = 'https://'.$cp_fix["subdir"].'.prodii.com/common/uploadimages/'.$filename;
+			$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
 		} else {
 			if($cp_fix["local"]) {
 				$url = $cp_fix["localpluginurl"].'templates/'.$cp_fix["template"].'/images/'.$cp_fix["teamimgplaceholder"];
 			} else {
-				$url = 'https://'.$cp_fix["subdir"].'.prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["teamimgplaceholder"];
+				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["teamimgplaceholder"];
 			}
 		}
 		
@@ -295,12 +295,12 @@ class CareerpagesLibrary {
 		global $cp_fix;
 		
 		if ($filename) {
-			$url = 'https://'.$cp_fix["subdir"].'.prodii.com/common/uploadimages/'.$filename;
+			$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
 		} else {
 			if($cp_fix["local"]) {
 				$url = $cp_fix["localpluginurl"].'templates/'.$cp_fix["template"].'/images/'.$cp_fix["companyimgplaceholder"];
 			} else {
-				$url = 'https://'.$cp_fix["subdir"].'.prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["companyimgplaceholder"];
+				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["companyimgplaceholder"];
 			}
 		}
 		

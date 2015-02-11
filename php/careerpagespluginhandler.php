@@ -44,7 +44,6 @@ function careerpages($action, $level, $ids, $breadcrumbs) {
 	} else {
 		if ($cp_fix["local"]) {
 			require_once(dirname(dirname(__FILE__)).'/templates/oslo/careerpagestemplategui.php');
-			//require_once(dirname(__FILE__).'/careerpageslibrary.php');
 			
 			// Adding more info for further use when retrieving images
 			$cp_fix["localpluginurl"] = dirname(dirname($_SERVER['PHP_SELF'])).'/';
