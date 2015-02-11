@@ -33,8 +33,9 @@ if (!class_exists("CareerpagesMain")) {
 		function templateEvaluate($template, $css, $subdir) {
 			$output = array();
 			
-			$output["php"] = CareerpagesMain::webItemExists(plugins_url('templates/'.$template.'/careerpagestemplategui.php' , __FILE__ ), array());
-			$output["js"] = CareerpagesMain::webItemExists(plugins_url('templates/'.$template.'/careerpagestemplate.js' , __FILE__ ), array());
+			$output["php"] = CareerpagesMain::webItemExists(plugins_url('templates/'.$template.'/php/careerpagestemplategui.php' , __FILE__ ), array());
+			$output["js"] = CareerpagesMain::webItemExists(plugins_url('templates/'.$template.'/js/careerpagestemplate.js' , __FILE__ ), array());
+			echo $css.'||';
 			$output["css"] = CareerpagesMain::webItemExists($css, array());
 
 			$output["error"] = 0;
@@ -42,11 +43,11 @@ if (!class_exists("CareerpagesMain")) {
 				$output["local"] = 1;
 				$output["templateurl"] = plugins_url('templates/'.$template.'/' , __FILE__ );
 			} else {
-				$file_headers = @get_headers('https://'.$subdir.'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplategui.php');
+				$file_headers = @get_headers('https://'.($subdir ? $subdir.'.' : '') .'prodii.com/common/careerpages/templates/'.$template.'/careerpagestemplategui.php');
 				$output["remote"]["status"] = strrpos($file_headers[0], ' 404 Not Found') === false;
 				if ($output["remote"]["status"]) {
 					$output["local"] = 0;
-					$output["templateurl"] = 'https://'.$subdir.'prodii.com/common/careerpages/templates/'.$template.'/';
+					$output["templateurl"] = 'https://'.($subdir ? $subdir.'.' : '').'prodii.com/common/careerpages/templates/'.$template.'/';
 				} else {
 					$output["error"] = 'The template '.$template.' is not locally in your company-presentation plugin nor on the Prodii server.';
 				}
@@ -71,7 +72,7 @@ if (!class_exists("CareerpagesMain")) {
 					$subdir = '';
 					if (stripos($post->post_content, 'subdir="') !== false) {
 						$startpos = stripos($post->post_content, 'subdir="') + 8;
-						$subdir = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos).'.';
+						$subdir = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					}
 					
 					// Css
@@ -92,10 +93,10 @@ if (!class_exists("CareerpagesMain")) {
 						wp_register_script('careerpages_googlemap_infobox', plugins_url('js/infobox.js' , __FILE__ ), array(), '1.0');
 						wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
 
-						wp_register_script('careerpages_ellipsis', 'https://'.$subdir.'prodii.com/assets/js/jquery.ellipsis.min.js', array(), '1.0');
+						wp_register_script('careerpages_ellipsis', 'https://'.($subdir ? $subdir.'.' : '').'prodii.com/assets/js/jquery.ellipsis.min.js', array(), '1.0');
 						wp_register_script('careerpages_awesomecloud', plugins_url('js/jquery.awesomeCloud-0.2.min.js' , __FILE__ ), array(), '1.0');
-						wp_register_script('careerpages_script', 'https://'.$subdir.'prodii.com/common/careerpages/js/careerpages.js', array(), '1.0');
-						wp_register_script('careerpages_library', 'https://'.$subdir.'prodii.com/assets/js/library.js', array(), '1.0');
+						wp_register_script('careerpages_script', 'https://'.($subdir ? $subdir.'.' : '').'prodii.com/common/careerpages/js/careerpages.js', array(), '1.0');
+						wp_register_script('careerpages_library', 'https://'.($subdir ? $subdir.'.' : '').'prodii.com/assets/js/library.js', array(), '1.0');
 
 						wp_register_script('careerpages_template_script', $templatefiles["templateurl"].'careerpagestemplate.js', array(), '1.0');
 						wp_register_style('careerpages_style', $templatefiles["templateurl"].'careerpagestemplatedefault.css');
@@ -139,7 +140,7 @@ if (!class_exists("CareerpagesMain")) {
 		function careerpages_shortcut($atts) {
 			global $templatefiles;
 			global $cp_fix;
-
+			echo "<pre>".print_r($atts, true)."</pre>";
 			if ($templatefiles["error"]) {
 				$output = $templatefiles["error"];
 			} else {
@@ -155,7 +156,7 @@ if (!class_exists("CareerpagesMain")) {
 				);
 
 				$ch = curl_init(); 
-				curl_setopt($ch, CURLOPT_URL, 'https://'.($atts["subdir"] ? $atts["subdir"].'.' : '').'prodii.com/common/careerpages/careerpageshandler.php'); 
+				curl_setopt($ch, CURLOPT_URL, 'https://'.(isset($atts["subdir"]) && $atts["subdir"] ? $atts["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
 				curl_setopt($ch, CURLOPT_POST, count($cp_fix));
 				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_fix));
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -167,7 +168,6 @@ if (!class_exists("CareerpagesMain")) {
 				} else {
 					if ($templatefiles["local"]) {
 						require_once(__DIR__.'/templates/'.$cp_fix["template"].'/careerpagestemplategui.php');
-						//require_once(__DIR__.'/php/careerpageslibrary.php');
 						
 						// Adding plugin url for further use when retrieving images
 						$cp_fix["localpluginurl"] = plugins_url('' , __FILE__ ).'/';
@@ -196,7 +196,7 @@ if (!class_exists("CareerpagesMain")) {
 			$content = 	'
 									<input id="handler" type="hidden" value="'.plugins_url('php/careerpagespluginhandler.php' , __FILE__ ).'"/>
 									<input id="local" type="hidden" value="'.(isset($templatefiles["local"]) ? $templatefiles["local"] : "").'"/>
-									<input id="subdir" type="hidden" value="'.(isset($atts["subdir"]) ? $atts["subdir"] : "").'"/>
+									<input id="subdir" type="hidden" value="'.(isset($atts["subdir"]) && $atts["subdir"] ? $atts["subdir"] : "").'"/>
 									<input id="template" type="hidden" value="'.$atts["template"].'"/>
 									<input id="teamids" type="hidden" value="'.($atts["level"] == "Teams" ? $atts["ids"] : "0").'"/>
 									<input id="teamid" type="hidden" value="'.($atts["level"] == "Team" ? $atts["ids"] : "0").'"/>

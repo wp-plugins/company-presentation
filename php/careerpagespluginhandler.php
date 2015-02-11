@@ -32,7 +32,7 @@ function careerpages($action, $level, $ids, $breadcrumbs) {
 	$cp_fix["breadcrumbs"] = $breadcrumbs;
 	
 	$ch = curl_init(); 
-	curl_setopt($ch, CURLOPT_URL, 'https://'.($cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/careerpageshandler.php'); 
+	curl_setopt($ch, CURLOPT_URL, 'https://'.($cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
 	curl_setopt($ch, CURLOPT_POST, count($cp_fix));
 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_fix));
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
