@@ -255,52 +255,52 @@ class CareerpagesLibrary {
 		return self::getSiteUrl().'/common/uploadimages/'.$filename;
 	}*/
 
-	public static function getProfileimageurl($imageurl, $mediaid) {
-		global $cp_fix;
-		
+	public static function getProfileimageurl($templateimages, $imageurl, $mediaid) {
+		global $templateini;
+
 		if ($imageurl) {
 			if($mediaid) {
 				$url = $imageurl;
 			} else {
-				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$imageurl;
+				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$imageurl;
 			}
 		} else {
-			if($cp_fix["local"]) {
-				$url = $cp_fix["localpluginurl"].'templates/'.$cp_fix["template"].'/images/'.$cp_fix["profileimgplaceholder"];
+			if($templateini["local"]) {
+				$url = $templateini["localpluginurl"].'templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
 			} else {
-				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["profileimgplaceholder"];
-			}
-		}
-		
-		return $url;
-	}
-
-	public static function getTeamimageurl($filename) {
-		global $cp_fix;
-
-		if ($filename) {
-			$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
-		} else {
-			if($cp_fix["local"]) {
-				$url = $cp_fix["localpluginurl"].'templates/'.$cp_fix["template"].'/images/'.$cp_fix["teamimgplaceholder"];
-			} else {
-				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["teamimgplaceholder"];
+				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
 			}
 		}
 		
 		return $url;
 	}
 
-	public static function getCompanyimageurl($filename) {
-		global $cp_fix;
+	public static function getTeamimageurl($templateimages, $filename) {
+		global $templateini;
 		
 		if ($filename) {
-			$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
+			$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
 		} else {
-			if($cp_fix["local"]) {
-				$url = $cp_fix["localpluginurl"].'templates/'.$cp_fix["template"].'/images/'.$cp_fix["companyimgplaceholder"];
+			if($templateini["local"]) {
+				$url = $templateini["localpluginurl"].'templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
 			} else {
-				$url = 'https://'.(isset($cp_fix["subdir"]) && $cp_fix["subdir"] ? $cp_fix["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$cp_fix["template"].'/images/'.$cp_fix["companyimgplaceholder"];
+				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
+			}
+		}
+		
+		return $url;
+	}
+
+	public static function getCompanyimageurl($templateimages, $filename) {
+		global $templateini;
+		
+		if ($filename) {
+			$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
+		} else {
+			if($templateini["local"]) {
+				$url = $templateini["localpluginurl"].'templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
+			} else {
+				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
 			}
 		}
 		
