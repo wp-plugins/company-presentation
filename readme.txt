@@ -76,6 +76,7 @@ PS: You'll need a [Prodii TEAM API KEY](https://prodii.com/WpPluginInfo) to use 
 
 = 3.0.0 =
 * Template runned from customers server is now possible, just by uploading your template to the Company Presentation plugin's newly added "templates"-folder.
+* The file structure has been changed in order to accommodate this new requirement.
 * Company Presentation plugin, detects if a certain template exists on the customers server. If exists, the template on the customers server is used, othervice the plugin tries to find the template on Prodii's server.
 
 = 2.0.5 =
