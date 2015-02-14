@@ -33,8 +33,6 @@ function getTeamsHtml(teams) {
 function getTeamHtml(team) {
 	var group = jQuery("#careerpagescontent").parent();
 	group.find('#loading').show();
-		console.log("getTeamHtml");
-		console.log(group);
 	jQuery.ajax({
 		cache: false,
 		url: group.find('#handler').val(),
@@ -42,15 +40,13 @@ function getTeamHtml(team) {
 		dataType: 'json',
 		type: 'post',
 		success: function(data) {
-			console.log("Success: getTeamHtml");
-			console.log(data);
 			jQuery("#careerpagescontent").html(data);
 			group.find("#teamid").val(team);
 			group.find("#profileid").val(0);
 			window.scrollTo(0, 0);
 			group.find('#loading').hide();
 		},
-		error: function(data) {console.log("Error: getTeamHtml");console.log(data);}
+		error: function(data) {console.log(data);}
 	});
 }
 

@@ -266,7 +266,7 @@ class CareerpagesLibrary {
 			}
 		} else {
 			if($templateini["local"]) {
-				$url = $templateini["localpluginurl"].'templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
+				$url = $templateini["templateurl"].'images/'.$templateimages["profile_image_placeholder"];
 			} else {
 				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
 			}
@@ -282,7 +282,7 @@ class CareerpagesLibrary {
 			$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
 		} else {
 			if($templateini["local"]) {
-				$url = $templateini["localpluginurl"].'templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
+				$url = $templateini["templateurl"].'images/'.$templateimages["team_image_placeholder"];
 			} else {
 				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
 			}
@@ -298,7 +298,7 @@ class CareerpagesLibrary {
 			$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
 		} else {
 			if($templateini["local"]) {
-				$url = $templateini["localpluginurl"].'templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
+				$url = $templateini["templateurl"].'images/'.$templateimages["company_image_placeholder"];
 			} else {
 				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
 			}

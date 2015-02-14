@@ -22,7 +22,6 @@ if ($action == "getTeamsHtml") {
 	echo json_encode(careerpages($action, "profile", $_POST['profile'], $_POST['breadcrumbs']));
 }
 
-// Depricated, future removal, but is still here to ensure back compatibility
 function careerpages($action, $level, $ids, $breadcrumbs) {
 	global $templateini;
 	
@@ -39,17 +38,22 @@ function careerpages($action, $level, $ids, $breadcrumbs) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 	$response = curl_exec($ch); 
 
+	$templateini["pluginurl"] = /*(isset($_SERVER['HTTPS']) ? 'http://' : 'https://')*/'//'.$_SERVER["HTTP_HOST"].str_replace($_SERVER["DOCUMENT_ROOT"], "", dirname(dirname(__FILE__))).'/';
+	$templateini["pluginpath"] = dirname(dirname(__FILE__)).'/';
+	if ($templateini["local"]) {
+		$templateini["templateurl"] = $templateini["pluginurl"].'templates/'.$templateini["template"].'/';
+		$templateini["templatepath"] = dirname(dirname(__FILE__)).'/templates/'.$templateini["template"].'/';
+	} else {
+		$templateini["templateurl"] = 'https://prodii.com/common/careerpages/templates/'.$templateini["template"].'/';
+		$templateini["templatepath"] = '';
+	}
+
 	if($errno = curl_errno($ch)) {
 		$output = "cURL error ({$errno}):\n {$error_message}";
 	} else {
 		if ($templateini["local"]) {
-			require_once(dirname(dirname(__FILE__)).'/templates/oslo/careerpagestemplategui.php');
-			
-			// Adding more info for further use when retrieving images
-			$templateini["localpluginurl"] = dirname(dirname($_SERVER['PHP_SELF'])).'/';
-			$templateini["companyimgplaceholder"] = 'image-placeholder900x600.png';
-			$templateini["teamimgplaceholder"] = 'image-placeholder900x600.png';
-			$templateini["profileimgplaceholder"] = 'image-placeholder310x310.png';
+			require_once($templateini["templatepath"].'/php/careerpagestemplategui.php');
+			require_once($templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
 
 			switch (ucfirst($level)) {
 				case "Teams":
