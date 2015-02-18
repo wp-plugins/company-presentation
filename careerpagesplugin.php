@@ -144,7 +144,7 @@ if (!class_exists("CareerpagesMain")) {
 						$startpos = stripos($post->post_content, 'key="') + 5;
 						$templateini["key"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					} else {
-						$templateini["errors"][] = 'Key missing in shortcode';
+						$templateini["errors"][] = 'Key missing or Key is misspelled in shortcode';
 					}
 					
 					// Template
@@ -152,7 +152,7 @@ if (!class_exists("CareerpagesMain")) {
 						$startpos = stripos($post->post_content, 'template="') + 10;
 						$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					} else {
-						$templateini["errors"][] = 'Template missing in shortcode';
+						$templateini["template"]= 'copenhagen';
 					}
 					
 					// Subdir
@@ -175,7 +175,7 @@ if (!class_exists("CareerpagesMain")) {
 						$startpos = stripos($post->post_content, 'level="') + 7;
 						$templateini["level"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					} else {
-						$templateini["errors"][] = 'Level missing in shortcode';
+						$templateini["errors"][] = 'Level missing or Level is misspelled in shortcode';
 					}
 					
 					// Ids
@@ -183,7 +183,7 @@ if (!class_exists("CareerpagesMain")) {
 						$startpos = stripos($post->post_content, 'ids="') + 5;
 						$templateini["ids"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					} else {
-						$templateini["errors"][] = 'Ids missing in shortcode';
+						$templateini["errors"][] = 'Ids missing or Ids is misspelled in shortcode';
 					}
 					
 					CareerpagesMain::getTemplatedata();
