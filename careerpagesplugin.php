@@ -138,6 +138,7 @@ if (!class_exists("CareerpagesMain")) {
 			
 			foreach ($posts as $post) {
 				$subdir = null;
+				echo $post.'<br>';
 				if (stripos($post->post_content, '[careerpages') !== false) {
 					// Key
 					if (stripos($post->post_content, 'key="') !== false) {
@@ -148,11 +149,11 @@ if (!class_exists("CareerpagesMain")) {
 					}
 					
 					// Template
-					if (stripos($post->post_content, 'subdir="') !== false) {
+					if (stripos($post->post_content, 'template="') !== false) {
 						$startpos = stripos($post->post_content, 'template="') + 10;
 						$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					} else {
-						$templateini["template"]= 'copenhagen';
+						$templateini["template"]= 'ost';
 					}
 					
 					// Subdir
