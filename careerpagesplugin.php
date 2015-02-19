@@ -228,12 +228,15 @@ if (!class_exists("CareerpagesMain")) {
 									<script type="text/javascript" src="'.plugins_url('js/respond.min.js' , __FILE__ ).'"></script>
 								<![endif]-->
 								';
-
-					foreach ($templateini["ini"]["styles"] as $name => $url) {
-						wp_enqueue_style($name);
+					if (!empty($templateini["ini"]["styles"])) {
+						foreach ($templateini["ini"]["styles"] as $name => $url) {
+							wp_enqueue_style($name);
+						}
 					}
-					foreach ($templateini["ini"]["scripts"] as $name => $url) {
-						wp_enqueue_script($name);
+					if (!empty($templateini["ini"]["scripts"])) {
+						foreach ($templateini["ini"]["scripts"] as $name => $url) {
+							wp_enqueue_script($name);
+						}
 					}
 					wp_enqueue_script('careerpages_script');
 					wp_enqueue_script('careerpages_library');
