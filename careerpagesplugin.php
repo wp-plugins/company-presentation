@@ -138,7 +138,7 @@ if (!class_exists("CareerpagesMain")) {
 			
 			foreach ($posts as $post) {
 				$subdir = null;
-				echo $post.'<br>';
+
 				if (stripos($post->post_content, '[careerpages') !== false) {
 					// Key
 					if (stripos($post->post_content, 'key="') !== false) {
@@ -153,7 +153,7 @@ if (!class_exists("CareerpagesMain")) {
 						$startpos = stripos($post->post_content, 'template="') + 10;
 						$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					} else {
-						$templateini["template"]= 'ost';
+						$templateini["template"]= 'copenhagen';
 					}
 					
 					// Subdir
@@ -189,7 +189,7 @@ if (!class_exists("CareerpagesMain")) {
 					
 					CareerpagesMain::getTemplatedata();
 					
-					if (!$templateini["errors"]) {
+					if (empty($templateini["errors"])) {
 						// plugin specific files from plugin, IE10 viewport hack for Surface/desktop Windows 8 bug
 						wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ));
 						
@@ -214,7 +214,7 @@ if (!class_exists("CareerpagesMain")) {
 		function addHeaderCode() {
 			global $templateini;
 			
-			if (!$templateini["errors"]) {
+			if (empty($templateini["errors"])) {
 				if (function_exists('wp_enqueue_script')) {
 					echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
 					echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
