@@ -250,7 +250,7 @@ if (!class_exists("CareerpagesMain")) {
 		function addContent($content = '') {
 		}
 		
-		function careerpages_shortcut($atts) {
+		static function careerpages_shortcut($atts) {
 			global $templateini;
 
 			if (empty($templateini["errors"])) {
