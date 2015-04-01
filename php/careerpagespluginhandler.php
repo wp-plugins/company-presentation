@@ -44,7 +44,7 @@ function careerpages($action, $level, $ids, $breadcrumbs) {
 		$templateini["templateurl"] = $templateini["pluginurl"].'templates/'.$templateini["template"].'/';
 		$templateini["templatepath"] = dirname(dirname(__FILE__)).'/templates/'.$templateini["template"].'/';
 	} else {
-		$templateini["templateurl"] = 'https://prodii.com/common/careerpages/templates/'.$templateini["template"].'/';
+		$templateini["templateurl"] = 'https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/';
 		$templateini["templatepath"] = '';
 	}
 
@@ -53,7 +53,7 @@ function careerpages($action, $level, $ids, $breadcrumbs) {
 	} else {
 		if ($templateini["local"]) {
 			require_once($templateini["templatepath"].'/php/careerpagestemplategui.php');
-			require_once($templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
+			require_once('https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageslibrary.php');
 
 			switch (ucfirst($level)) {
 				case "Teams":

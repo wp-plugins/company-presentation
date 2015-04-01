@@ -41,14 +41,14 @@ if (!class_exists("CareerpagesMain")) {
 				$templateini["pluginpath"] = plugin_dir_path(__FILE__);
 				if ($templateini["templatedata"]["php"]["status"] && $templateini["templatedata"]["js"]["status"] && $templateini["templatedata"]["css"]["status"]) {
 					$templateini["local"] = 1;
-					$templateini["templateurl"] = plugins_url('templates/'.$templateini["template"].'/' , __FILE__ );
+					$templateini["templateurl"] = plugins_url('templates/'.$templateini["urlencodedtemplate"].'/' , __FILE__ );
 					$templateini["templatepath"] = plugin_dir_path(__FILE__).'templates/'.$templateini["template"].'/';
 				} else {
 					$file_headers = @get_headers('https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '') .'prodii.com/common/careerpages/templates/'.$templateini["template"].'/php/careerpagestemplategui.php');
 					$templateini["remote"]["status"] = strrpos($file_headers[0], ' 404 Not Found') === false;
 					if ($templateini["remote"]["status"]) {
 						$templateini["local"] = 0;
-						$templateini["templateurl"] = 'https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/';
+						$templateini["templateurl"] = 'https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["urlencodedtemplate"].'/';
 						$templateini["templatepath"] = '';
 					} else {
 						$templateini["errors"][] = 'We cannot find the template you are asking for. The '.$templateini["template"].' template is not locally in your company-presentation plugin nor on the Prodii server.';
@@ -60,7 +60,7 @@ if (!class_exists("CareerpagesMain")) {
 				// Get template ini
 				if ($templateini["local"]) {
 					require_once($templateini["templatepath"].'php/careerpagestemplategui.php');
-					require_once($templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
+					require_once('https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageslibrary.php');
 					$templateini["ini"] = CareerpagesTemplateGui::getIni();
 				} else {
 					$cp_info = array(
@@ -152,8 +152,10 @@ if (!class_exists("CareerpagesMain")) {
 					if (stripos($post->post_content, 'template="') !== false) {
 						$startpos = stripos($post->post_content, 'template="') + 10;
 						$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+						$templateini["urlencodedtemplate"] = str_replace(" ", "%20", substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos));
 					} else {
 						$templateini["template"]= 'copenhagen';
+						$templateini["urlencodedtemplate"]= 'copenhagen';
 					}
 					
 					// Subdir
