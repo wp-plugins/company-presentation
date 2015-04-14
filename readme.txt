@@ -68,9 +68,21 @@ PS: You'll need a [Prodii TEAM API KEY](https://prodii.com/WpPluginInfo) to use 
 
 == Screenshots ==
 
-1. Company level sample 
-2. Team level sample
-3. Profile level sample
+1. For companies who are proud of their employees. Employees who are proud of their work place. And professionals who are proud of what they do. 
+2. Step 1: Install and activate and your plugin is ready to use.
+3. Step 2: All you have to do is to add a New Page. Paste your Publisher-Key into the html-part. You will be able to complete as many profile pages as you please - in just one click.
+4. Step 3: Select full page width. Publish. All done! You can manage and update all content from within the Prodii app.
+5. This is how you generate your Publisher Key: Login to prodii.com and create an account with your company.
+6. Fill out the template. Upload a picture from your work place.
+7. Tell a little about your company, fill in address and contact information and connect your company social media. 
+8. Create all the teams you need to complete your organisational set-up. Invite people to your teams.
+9. Follow how each team member adds more content to your profile.
+10. Watch how the content fills out your company-, team- and employee profiles on your home page.
+11. A close-up of a team profile - build and published on the fly.
+12. A view of how an employee profile may look like in one of our free templates. Ad your own look and feel via our premium designs or customisation.
+13. Rearrange and sort team members, put them on hold for a while or delete them from the team, completely.
+14. Compare skills within your teams.
+15. You are in control of the content on your home page. Your employees (team members) are in charge of their profile and content. Together you pick "the best of all of you". Choose a template or have one customised. All templates, our free templates included, are responsive.
 
 == Changelog ==
 
