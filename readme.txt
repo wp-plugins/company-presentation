@@ -59,6 +59,7 @@ Prodii company, team and people profiling is a service plugin provided to profes
 == Frequently Asked Questions ==
 = How do i get my Publisher key? =
 A publisher Key is a payed service.
+
 1. Visit prodii.com and signup or login
 2. Create a company and your team(s) and invite members
 3. Select "Publish on Homepage" 
