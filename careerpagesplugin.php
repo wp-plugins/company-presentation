@@ -14,10 +14,10 @@ License:
 */
 
 if (!class_exists("CareerpagesMain")) {
-	$templateini = array();
-	$templateini["errors"] = array();
 
 	class CareerpagesMain {
+		public static $templateini;
+
 		function CareerpagesMain() {
 		}
 		
@@ -31,194 +31,198 @@ if (!class_exists("CareerpagesMain")) {
 		}
 		
 		function getTemplatedata() {
-			global $templateini;
-
-			if (empty($templateini["errors"])) {
-				$templateini["templatedata"]["php"] = CareerpagesMain::webItemExists(plugins_url('templates/'.$templateini["template"].'/php/careerpagestemplategui.php' , __FILE__ ), array());
-				$templateini["templatedata"]["js"] = CareerpagesMain::webItemExists(plugins_url('templates/'.$templateini["template"].'/js/careerpagestemplate.js' , __FILE__ ), array());
-				$templateini["templatedata"]["css"] = CareerpagesMain::webItemExists($templateini["css"] ? $templateini["css"] : plugins_url('templates/'.$templateini["template"].'/css/careerpagestemplatedefault.css' , __FILE__ ), array());
-				$templateini["pluginurl"] = plugins_url('', __FILE__).'/';
-				$templateini["pluginpath"] = plugin_dir_path(__FILE__);
-				if ($templateini["templatedata"]["php"]["status"] && $templateini["templatedata"]["js"]["status"] && $templateini["templatedata"]["css"]["status"]) {
-					$templateini["local"] = 1;
-					$templateini["templateurl"] = plugins_url('templates/'.$templateini["urlencodedtemplate"].'/' , __FILE__ );
-					$templateini["templatepath"] = plugin_dir_path(__FILE__).'templates/'.$templateini["template"].'/';
+			if (empty(self::$templateini["errors"])) {
+				self::$templateini["templatedata"]["php"] = CareerpagesMain::webItemExists(plugins_url('templates/'.self::$templateini["template"].'/php/careerpagestemplategui.php' , __FILE__ ), array());
+				//self::$templateini["templatedata"]["js"] = CareerpagesMain::webItemExists(plugins_url('templates/'.self::$templateini["template"].'/js/careerpagestemplate.js' , __FILE__ ), array());
+				//self::$templateini["templatedata"]["css"] = CareerpagesMain::webItemExists(self::$templateini["css"] ? self::$templateini["css"] : plugins_url('templates/'.self::$templateini["template"].'/css/careerpagestemplatedefault.css' , __FILE__ ), array());
+				self::$templateini["pluginurl"] = plugins_url('', __FILE__).'/';
+				self::$templateini["pluginpath"] = plugin_dir_path(__FILE__);
+				//if (self::$templateini["templatedata"]["php"]["status"] && self::$templateini["templatedata"]["js"]["status"] && self::$templateini["templatedata"]["css"]["status"]) {
+				if (self::$templateini["templatedata"]["php"]["status"]) {
+					self::$templateini["local"] = 1;
+					self::$templateini["templateurl"] = plugins_url('templates/'.self::$templateini["urlencodedtemplate"].'/' , __FILE__ );
+					self::$templateini["templatepath"] = plugin_dir_path(__FILE__).'templates/'.self::$templateini["template"].'/';
 				} else {
-					$file_headers = @get_headers('https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '') .'prodii.com/common/careerpages/templates/'.$templateini["template"].'/php/careerpagestemplategui.php');
-					$templateini["remote"]["status"] = strrpos($file_headers[0], ' 404 Not Found') === false;
-					if ($templateini["remote"]["status"]) {
-						$templateini["local"] = 0;
-						$templateini["templateurl"] = 'https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["urlencodedtemplate"].'/';
-						$templateini["templatepath"] = '';
+					$file_headers = @get_headers('https://'.(self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '') .'prodii.com/common/careerpages/templates/'.self::$templateini["template"].'/php/careerpagestemplategui.php');
+					self::$templateini["remote"]["status"] = strrpos($file_headers[0], ' 404 Not Found') === false;
+					if (self::$templateini["remote"]["status"]) {
+						self::$templateini["local"] = 0;
+						self::$templateini["templateurl"] = 'https://'.(self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.self::$templateini["urlencodedtemplate"].'/';
+						self::$templateini["templatepath"] = '';
 					} else {
-						$templateini["errors"][] = 'We cannot find the template you are asking for. The '.$templateini["template"].' template is not locally in your company-presentation plugin nor on the Prodii server.';
+						self::$templateini["errors"][] = 'We cannot find the template you are asking for. The '.self::$templateini["template"].' template is not locally in your company-presentation plugin nor on the Prodii server.';
 					}
 				}
 			}
 
-			if (empty($templateini["errors"])) {
+			if (empty(self::$templateini["errors"])) {
 				// Get template ini
-				if ($templateini["local"]) {
-					require_once($templateini["templatepath"].'php/careerpagestemplategui.php');
-					require_once('https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageslibrary.php');
-					$templateini["ini"] = CareerpagesTemplateGui::getIni();
+				if (self::$templateini["local"]) {
+					require_once(self::$templateini["templatepath"].'php/careerpagestemplategui.php');
+					require_once(self::$templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
+					self::$templateini["ini"] = CareerpagesTemplateGui::getIni();
 				} else {
 					$cp_info = array(
 						'action' => 'getIni',
-						'key' => $templateini["key"],
-						'template' => $templateini["template"]
+						'key' => self::$templateini["key"],
+						'template' => self::$templateini["template"]
 					);
 					$ch = curl_init(); 
-					curl_setopt($ch, CURLOPT_URL, 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
+					curl_setopt($ch, CURLOPT_URL, 'https://'.(isset(self::$templateini["subdir"]) && self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
 					curl_setopt($ch, CURLOPT_POST, count($cp_info));
 					curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_info));
 					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-					$templateini["ini"] = json_decode(curl_exec($ch), true);
+					self::$templateini["ini"] = json_decode(curl_exec($ch), true);
 					if($errno = curl_errno($ch)) {
-						$templateini["errors"][] = "Get template initialisation cURL error ({$errno}):\n {$error_message}";
-					} elseif ($templateini["ini"] == '') {
-						$templateini["errors"][] = "No template initialisation returned from cURL";
+						self::$templateini["errors"][] = "Get template initialisation cURL error ({$errno}):\n {$error_message}";
+					} elseif (self::$templateini["ini"] == '') {
+						self::$templateini["errors"][] = "No template initialisation returned from cURL";
 					}
 					curl_close($ch);
 				}
 			}
 
-			if (empty($templateini["errors"])) {
+			if (empty(self::$templateini["errors"])) {
 				//Get data(Template on local server) or html(Template on Prodii server)
 				$cp_data = array(
-					'action' => 'get'.$templateini["level"].($templateini["local"] ? 'Data' : 'Html'),
-					'key' => $templateini["key"],
-					strtolower($templateini["level"]) => $templateini["ids"],
-					'template' => $templateini["template"],
-					'local' => $templateini["local"],
-					'subdir' => $templateini["subdir"],
+					'action' => 'get'.self::$templateini["level"].(self::$templateini["local"] ? 'Data' : 'Html'),
+					'key' => self::$templateini["key"],
+					strtolower(self::$templateini["level"]) => self::$templateini["ids"],
+					'template' => self::$templateini["template"],
+					'local' => self::$templateini["local"],
+					'subdir' => self::$templateini["subdir"],
 					'css' => isset($css) && $css ? $css : ''
 				);
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
+				curl_setopt($ch, CURLOPT_URL, 'https://'.(isset(self::$templateini["subdir"]) && self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
 				curl_setopt($ch, CURLOPT_POST, count($cp_data));
 				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 				$response = json_decode(curl_exec($ch), true);
 				if($errno = curl_errno($ch)) {
-					$templateini["errors"][] = 'Get '.($templateini["local"] ? 'data' : 'html').' cURL error ({$errno}):\n {$error_message}';
+					self::$templateini["errors"][] = 'Get '.(self::$templateini["local"] ? 'data' : 'html').' cURL error ({$errno}):\n {$error_message}';
 				} elseif ($response == '') {
-					$templateini["errors"][] = 'No '.($templateini["local"] ? 'data' : 'html').' returned from cURL';
+					self::$templateini["errors"][] = 'No '.(self::$templateini["local"] ? 'data' : 'html').' returned from cURL';
 				}
 				curl_close($ch);
 			}
 			
-			if (empty($templateini["errors"])) {
-				if ($templateini["local"]) {
-					switch ($templateini["level"]) {
+			if (empty(self::$templateini["errors"])) {
+				if (self::$templateini["local"]) {
+					switch (self::$templateini["level"]) {
 						case "Teams":
-							$templateini["gui"] = CareerpagesTemplateGui::getTeamsGui($response);
+							self::$templateini["gui"] = CareerpagesTemplateGui::getTeamsGui($response);
 							break;
 						case "Team":
-							$templateini["gui"] = CareerpagesTemplateGui::getTeamGui($response);
+							self::$templateini["gui"] = CareerpagesTemplateGui::getTeamGui($response);
 							break;
 						case "Profile":
-							$templateini["gui"] = CareerpagesTemplateGui::getProfileGui($response);
+							self::$templateini["gui"] = CareerpagesTemplateGui::getProfileGui($response);
 							break;
 					}						
 				} else {
-					$templateini["gui"] = $response;
+					self::$templateini["gui"] = $response;
 				}
 			}
 		}
 		
 		function conditionally_add_scripts_and_styles($posts){
-			global $templateini;
+			self::$templateini = array();
+			self::$templateini["errors"] = array();
 
 			$error = array();
 			
 			if (empty($posts)) return $posts;
-			
-			foreach ($posts as $post) {
-				$subdir = null;
 
-				if (stripos($post->post_content, '[careerpages') !== false) {
-					// Key
-					if (stripos($post->post_content, 'key="') !== false) {
-						$startpos = stripos($post->post_content, 'key="') + 5;
-						$templateini["key"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+			$shortcode_found = false;
+			foreach ($posts as $post) {
+				if (stripos($post->post_content, '[careerpages ') !== false) {
+					if ($post->post_type == 'page') {
+						$shortcode_found = true;
+						break;
 					} else {
-						$templateini["errors"][] = 'Key missing or Key is misspelled in shortcode';
+						$post->post_content = 'Sorry but Career pages only works with pages';
 					}
-					
-					// Template
-					if (stripos($post->post_content, 'template="') !== false) {
-						$startpos = stripos($post->post_content, 'template="') + 10;
-						$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-						$templateini["urlencodedtemplate"] = str_replace(" ", "%20", substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos));
-					} else {
-						$templateini["template"]= 'copenhagen';
-						$templateini["urlencodedtemplate"]= 'copenhagen';
-					}
-					
-					// Subdir
-					$subdir = '';
-					if (stripos($post->post_content, 'subdir="') !== false) {
-						$startpos = stripos($post->post_content, 'subdir="') + 8;
-						$templateini["subdir"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					} else {
-						$templateini["subdir"] = '';
-					}
-					
-					// Css
-					if (stripos($post->post_content, 'css="') !== false) {
-						$startpos = stripos($post->post_content, 'css="') + 5;
-						$templateini["css"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					} else {
-						$templateini["css"] = '';
-					}
-					
-					// Level
-					if (stripos($post->post_content, 'level="') !== false) {
-						$startpos = stripos($post->post_content, 'level="') + 7;
-						$templateini["level"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					} else {
-						$templateini["errors"][] = 'Level missing or Level is misspelled in shortcode';
-					}
-					
-					// Ids
-					if (stripos($post->post_content, 'ids="') !== false) {
-						$startpos = stripos($post->post_content, 'ids="') + 5;
-						$templateini["ids"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					} else {
-						$templateini["errors"][] = 'Ids missing or Ids is misspelled in shortcode';
-					}
-					
-					CareerpagesMain::getTemplatedata();
-					
-					if (empty($templateini["errors"])) {
-						// plugin specific files from plugin, IE10 viewport hack for Surface/desktop Windows 8 bug
-						wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ));
-						
-						wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
-						wp_register_script('careerpages_script', plugins_url('js/careerpages.js' , __FILE__ ));
-						wp_register_script('careerpages_library', plugins_url('js/library.js' , __FILE__ ));
-						foreach ($templateini["ini"]["styles"] as $name => $url) {
-							wp_register_style($name, $templateini["templateurl"].$url);
-						}
-						foreach ($templateini["ini"]["scripts"] as $name => $url) {
-							wp_register_script($name, $templateini["templateurl"].$url);
-						}
-					}
-					
-					break;
 				}
 			}
-		 
+			
+			if ($shortcode_found) {
+				// Key
+				if (stripos($post->post_content, ' key="') !== false) {
+					$startpos = stripos($post->post_content, ' key="') + 6;
+					self::$templateini["key"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+				} else {
+					self::$templateini["errors"][] = 'Key missing or Key is misspelled in shortcode';
+				}
+				
+				// Template
+				if (stripos($post->post_content, ' template="') !== false) {
+					$startpos = stripos($post->post_content, ' template="') + 11;
+					self::$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+					self::$templateini["urlencodedtemplate"] = rawurlencode(substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos));
+				} else {
+					self::$templateini["template"]= 'copenhagen';
+					self::$templateini["urlencodedtemplate"]= 'copenhagen';
+				}
+				
+				// Subdir
+				$subdir = '';
+				if (stripos($post->post_content, ' subdir="') !== false) {
+					$startpos = stripos($post->post_content, ' subdir="') + 9;
+					self::$templateini["subdir"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+				} else {
+					self::$templateini["subdir"] = '';
+				}
+				
+				// Css
+				if (stripos($post->post_content, ' css="') !== false) {
+					$startpos = stripos($post->post_content, ' css="') + 6;
+					self::$templateini["css"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+				} else {
+					self::$templateini["css"] = '';
+				}
+				
+				// Level
+				if (stripos($post->post_content, ' level="') !== false) {
+					$startpos = stripos($post->post_content, ' level="') + 8;
+					self::$templateini["level"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+				} else {
+					self::$templateini["errors"][] = 'Level missing or Level is misspelled in shortcode';
+				}
+				
+				// Ids
+				if (stripos($post->post_content, ' ids="') !== false) {
+					$startpos = stripos($post->post_content, ' ids="') + 6;
+					self::$templateini["ids"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+				} else {
+					self::$templateini["errors"][] = 'Ids missing or Ids is misspelled in shortcode';
+				}
+
+				CareerpagesMain::getTemplatedata();
+				if (empty(self::$templateini["errors"])) {
+					foreach (self::$templateini["ini"]["styles"] as $name => $url) {
+						wp_register_style($name, self::$templateini["templateurl"].$url);
+					}
+					foreach (self::$templateini["ini"]["scripts"] as $name => $url) {
+						wp_register_script($name, self::$templateini["templateurl"].$url);
+					}
+				}
+
+				// plugin specific files from plugin, IE10 viewport hack for Surface/desktop Windows 8 bug
+				wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ));
+				
+				wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
+				wp_register_script('careerpages_script', plugins_url('js/careerpages.js' , __FILE__ ));
+				wp_register_script('careerpages_library', plugins_url('js/library.js' , __FILE__ ));
+			}
+			
 			return $posts;
 		}
 		
 		function addHeaderCode() {
-			global $templateini;
-			
-			if (empty($templateini["errors"])) {
+			if (empty(self::$templateini["errors"])) {
 				if (function_exists('wp_enqueue_script')) {
 					echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
 					echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
@@ -232,13 +236,13 @@ if (!class_exists("CareerpagesMain")) {
 									<script type="text/javascript" src="'.plugins_url('js/respond.min.js' , __FILE__ ).'"></script>
 								<![endif]-->
 								';
-					if (!empty($templateini["ini"]["styles"])) {
-						foreach ($templateini["ini"]["styles"] as $name => $url) {
+					if (!empty(self::$templateini["ini"]["styles"])) {
+						foreach (self::$templateini["ini"]["styles"] as $name => $url) {
 							wp_enqueue_style($name);
 						}
 					}
-					if (!empty($templateini["ini"]["scripts"])) {
-						foreach ($templateini["ini"]["scripts"] as $name => $url) {
+					if (!empty(self::$templateini["ini"]["scripts"])) {
+						foreach (self::$templateini["ini"]["scripts"] as $name => $url) {
 							wp_enqueue_script($name);
 						}
 					}
@@ -253,12 +257,10 @@ if (!class_exists("CareerpagesMain")) {
 		}
 		
 		static function careerpages_shortcut($atts) {
-			global $templateini;
-
-			if (empty($templateini["errors"])) {
+			if (empty(self::$templateini["errors"])) {
 				$content = 	'
 										<input id="handler" type="hidden" value="'.plugins_url('php/careerpagespluginhandler.php' , __FILE__ ).'"/>
-										<input id="local" type="hidden" value="'.(isset($templateini["local"]) ? $templateini["local"] : "").'"/>
+										<input id="local" type="hidden" value="'.(isset(self::$templateini["local"]) ? self::$templateini["local"] : "").'"/>
 										<input id="subdir" type="hidden" value="'.(isset($atts["subdir"]) && $atts["subdir"] ? $atts["subdir"] : "").'"/>
 										<input id="template" type="hidden" value="'.$atts["template"].'"/>
 										<input id="key" type="hidden" value="'.$atts["key"].'"/>
@@ -266,11 +268,11 @@ if (!class_exists("CareerpagesMain")) {
 										<input id="teamid" type="hidden" value="'.($atts["level"] == "Team" ? $atts["ids"] : "0").'"/>
 										<input id="profileid" type="hidden" value="'.($atts["level"] == "Profile" ? $atts["ids"] : "0").'"/>
 										'.(isset($atts["css"]) && $atts["css"] ? '<input id="css" type="hidden" value="'.$atts["css"].'"/>' : '<input id="css" type="hidden" value="careerpagestemplatedefault.css"/>').'
-										<div id="careerpagescontent" class="prd-container">'.(isset($templateini["gui"]) ? $templateini["gui"] : '').'</div>
+										<div id="careerpagescontent" class="prd-container">'.(isset(self::$templateini["gui"]) ? self::$templateini["gui"] : '').'</div>
 										';
 			} else {
 				$errors = '';
-				foreach ($templateini["errors"] as $index => $error) {
+				foreach (self::$templateini["errors"] as $index => $error) {
 					$errors .= ($index + 1).')&nbsp;'.$error.'<br>';
 				}
 				$content = $errors;
