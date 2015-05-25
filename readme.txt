@@ -3,7 +3,7 @@ Contributors: Ralph Rezende
 Tags: prodii, company, team, presentation, profile
 Requires at least: 3.0.1
 Tested up to: 4.2.2
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,41 +95,44 @@ Your profiles are managed within Prodii. You can easily deactivate or even delet
 15. You are in control of the content on your home page. Your employees (team members) are in charge of their profile and content. Together you pick "the best of all of you". Choose a template or have one customised. All templates, our free templates included, are responsive.
 
 == Changelog ==
+= 3.0.2 =
+* Modification - Now teams is shown in the same order as in shortcode or embedcode, instead of name alphabetic, which means you can control the team order.
+
 = 3.0.1 =
 * Problem resolved - Plugin installed on WordPress site located in subdomain error.
 
 = 3.0.0 =
-* Template runned from customers server is now possible, just by uploading your template to the Company Presentation plugin's newly added "templates"-folder.
+* Modification - Template runned from customers server is now possible, just by uploading your template to the Company Presentation plugin's newly added "templates"-folder.
 * The file structure has been changed in order to accommodate this new requirement.
 * Company Presentation plugin, detects if a certain template exists on the customers server. If exists, the template on the customers server is used, othervice the plugin tries to find the template on Prodii's server.
 
 = 2.0.5 =
-* Template Copenhagen is now fully responsive.
+* Modification - Template Copenhagen is now fully responsive.
 * js file included for each template, in order to be template specific.
 
 = 2.0.4 =
 * Problem resolved - Ajax load error when the wordpress software is not located in the root directory.
 
 = 2.0.3 =
-* Breadcrumb related API issue resolved
-* Loading spinner added
+* Problem resolved - Breadcrumb related API issue resolved
+* Modification - Loading spinner added
 
 = 2.0.2 =
-* Calls to the Prodii API is now posted instead of getted
+* Modification - Calls to the Prodii API is now posted instead of getted
 * Issue with breadcrumbs resolved
 * All images now have a fixed width/height ratio, wich make the presentaion look nicer
 
 = 2.0.1 =
-* Font Awesome elements added to the infographics
+* Modification - Font Awesome elements added to the infographics
 
 = 2.0.0 =
-* Prodii moved to a secure server (SSL-protocol, Secure Sockets Layer)
+* Modification - Prodii moved to a secure server (SSL-protocol, Secure Sockets Layer)
 
 = 1.0.2 =
-* Deprecated functioncall problem, resolved
+* Problem resolved - Deprecated functioncall problem, resolved
 
 = 1.0.1 =
-* Problem with navigation with some themes resolved
+* Problem resolved - Problem with navigation with some themes resolved
 
 = 1.0.0 =
 * Initial release
