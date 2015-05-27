@@ -4,9 +4,9 @@
  * @package careerpages
  */
 /*
-Plugin Name: Careerpages
+Plugin Name: Careerpages, 
 Plugin URI: https://prodii.com/WpPluginInfo
-Description: The ultimative easiest way to present you company.
+Description: The ultimative easiest way to present your company.
 Version: 3.0.2
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/ralphrezendelarsen
