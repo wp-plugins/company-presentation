@@ -95,6 +95,9 @@ Your profiles are managed within Prodii. You can easily deactivate or even delet
 15. You are in control of the content on your home page. Your employees (team members) are in charge of their profile and content. Together you pick "the best of all of you". Choose a template or have one customised. All templates, our free templates included, are responsive.
 
 == Changelog ==
+= 3.0.3 =
+* Modification - In order to track statistics on your plugins, we are collecting data about client ip, location, language, browser, platform, display level, display ids and template used. These data can be viewed on prodii.com or retrieved using our API. 
+
 = 3.0.2 =
 * Modification - Now teams is shown in the same order as in shortcode or embedcode, instead of name alphabetic, which means you can control the team order.
 

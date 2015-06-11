@@ -1,3 +1,5 @@
+// Running careerpages from plugins
+
 // This function is just to resolve that the tooltip function is missing
 (function ($) {
 	$.fn.tooltip = function(arg) {

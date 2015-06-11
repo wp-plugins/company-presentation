@@ -7,7 +7,7 @@
 Plugin Name: Careerpages, 
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present your company.
-Version: 3.0.2
+Version: 3.0.3
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/ralphrezendelarsen
 License:
@@ -56,10 +56,11 @@ if (!class_exists("CareerpagesMain")) {
 			}
 
 			if (empty(self::$templateini["errors"])) {
+				require_once(self::$templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
+				
 				// Get template ini
 				if (self::$templateini["local"]) {
 					require_once(self::$templateini["templatepath"].'php/careerpagestemplategui.php');
-					require_once(self::$templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
 					self::$templateini["ini"] = CareerpagesTemplateGui::getIni();
 				} else {
 					$cp_info = array(
@@ -106,6 +107,29 @@ if (!class_exists("CareerpagesMain")) {
 				} elseif ($response == '') {
 					self::$templateini["errors"][] = 'No '.(self::$templateini["local"] ? 'data' : 'html').' returned from cURL';
 				}
+				curl_close($ch);
+			}
+
+			if (empty(self::$templateini["errors"])) {
+				//Set server data
+				$cp_data = array(
+					'action' => 'setLogistics',
+					'level' => self::$templateini["level"],
+					'ids' => self::$templateini["ids"],
+					'method' => 'wpplugin',
+					'template' => self::$templateini["template"],
+					'key' => self::$templateini["key"],
+					'clientip' => CareerpagesLibrary::get_client_ip(),
+					'server' => json_encode($_SERVER)
+				);
+
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'https://'.(isset(self::$templateini["subdir"]) && self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
+				curl_setopt($ch, CURLOPT_POST, count($cp_data));
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+				curl_exec($ch);
 				curl_close($ch);
 			}
 			
