@@ -143,15 +143,15 @@ Your profiles are managed within Prodii. You can easily deactivate or even delet
 
 = Known issues with themes =
 * Problem resolved (see changelog 3.0.0) - We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row", "col" and "container". This produces problems with some themes, that also uses these classnames.
-* Careerpages never show its content on page, when having Easy Google Fonts installed.
 
 
-Following themes is known to have this problem: Presscore.
+Following themes is known to have this problem:
+None.
 
 Please leave a note if you have more issues
 
 = Known issues with other plugins =
-No known issue with other themes or plugins.
+* Easy Google Fonts - Careerpages never show its content on page, when having Easy Google Fonts installed.
 
 Please leave a note if you have more issues
 
