@@ -108,6 +108,7 @@ Your profiles are managed within Prodii. You can easily deactivate or even delet
 * Modification - Template runned from customers server is now possible, just by uploading your template to the Company Presentation plugin's newly added "templates"-folder.
 * The file structure has been changed in order to accommodate this new requirement.
 * Company Presentation plugin, detects if a certain template exists on the customers server. If exists, the template on the customers server is used, othervice the plugin tries to find the template on Prodii's server.
+* Our templates now uses a limeited and enhanced version of Bootstrap to avoid the "simple classname Bootstrap problem", so now Carerpage run perfectly together with any theme.
 
 = 2.0.5 =
 * Modification - Template Copenhagen is now fully responsive.
@@ -141,8 +142,9 @@ Your profiles are managed within Prodii. You can easily deactivate or even delet
 * Initial release
 
 = Known issues with themes =
-We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row", "col" and "container". This produces problems with some themes, that also uses these classnames.
-In order to solve this problem, we have been looking for a way to isolate our plugin css or maybe quit bootstrap.
+* Problem resolved (see changelog 3.0.0) - We are using bootstrap framework, which unfortunately uses very simple and frequently used classnames eg. "row", "col" and "container". This produces problems with some themes, that also uses these classnames.
+* Careerpages never show its content on page, when having Easy Google Fonts installed.
+
 
 Following themes is known to have this problem: Presscore.
 
