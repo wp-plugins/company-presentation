@@ -57,20 +57,24 @@ Before downloading and installing this plugin please get familiar with our [term
 Drop the short code on a  page - and set 'full width'. 
 
 Demo-shortcodes: 
+
 Publishing a team is a premium service; Copy and paste the short codes provided below into a full-width page on Wordpress, to see what your company page potentially may look like.
 
 Try these demo-short codes to make see a sample design and make sure it works with your wordpress theme. 
 
 Copenhagen-light, free template (included in subscription)
 Demo of a company page with a startpage, 2 team profile pages and 4 employee profiles: [http://blog.prodii.com/templates/copenhagen-light/](http://blog.prodii.com/templates/copenhagen-light/) 
+
 Company shortcode: [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="copenhagen light"]
 
 Demo of a team page with one team profile and 3 employee profiles:
 Team short code: [careerpages key="WjEK4UWFcApDLsFR" level="Team" ids="56" template="copenhagen light"]
 
 Demeter and Helios, premium templates
+
 Demo (paid teamplate): http://blog.prodii.com/templates/demeter
-shortcode: [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="demeter"]
+
+Shortcode: [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="demeter"]
 
 Demo (paid teamplate): http://blog.prodii.com/templates/helios
  [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="helios"]
