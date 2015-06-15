@@ -1,6 +1,6 @@
 === Company, Team and People presentation ===
 Contributors: Ralph Rezende
-Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, About Us, about us plugin, branding, company profile, corporate profile, custom, customize
+Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
 Requires at least: 4.0
 Tested up to: 4.2.2
 Stable tag: 3.0.3
