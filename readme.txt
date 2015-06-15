@@ -91,25 +91,28 @@ Customised language file: 10€
 You can create as  many short codes combination as you like. 
 
 == Frequently Asked Questions ==
-= How do i get my Publisher key? =
-A publisher Key is a payed service.
-
+= How do i get my Publisher key and short code? =
 1. Visit prodii.com and signup or login
 2. Create a company and your team(s) and invite members
-3. Select "Publish on Homepage" 
+3. Select "Buy Subscription"
 4. Select teams and a template (design)
 5. Pay and your Publisher Key is ready.
 
 = How do I cancel a subscription? =
-1. 10 days before you subscription stops you receive an e-mail
-2. If you want to continue your subscription, you have to actively do so.
-3. If you want to cancel your subscription - you don't have to do anything. 
+1. If you want to continue your subscription, you have to actively do so. We will remind you via e-mail.
+2. If you want to cancel your subscription - you don't have to do anything.
 
 = How do you keep my credit card information? =
-We don't. We use PayPal.
+We use PayPal.
+
+= What information will be shown on our home page? =
+This is up to you. Prodii makes it easy for you to gather exactly the information you need via your employees/ co-workers. 
 
 = How do I delete a person from the company home page? =
-Your profiles are managed within Prodii. You can easily deactivate or even delete a team member. Then they will not show on your home page anymore.
+Your profiles are managed within Prodii. You can easily deactivate or delete a team member. Then they will not show on your home page anymore.
+
+= Is there a free trial period? =
+You can sign up on prodii for free and invite team members and build your company page. Only when you want to publish on your home page, we charge a fee. 
 
 == Screenshots ==
 1. For companies who are proud of their employees. Employees who are proud of their work place. And professionals who are proud of what they do. 
