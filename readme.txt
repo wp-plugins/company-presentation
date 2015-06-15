@@ -7,8 +7,9 @@ Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Expose your company teams and people in minutes.
-Prodii collects data for you from multiple medias to integrate with your personal homepage.
+A professional profile section with an 'About Us' Page with visual Company, Team and People profiles.
+
+Prodii displays content of your choice such as photo, bio, contact information, skills of your employees, team and company where each employee can have their own page.
 
 == Description ==
 Tell about your people and skills on your intranet and home page. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.
