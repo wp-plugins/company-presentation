@@ -53,17 +53,42 @@ Prodii company, team and people profiling is a service plugin provided to profes
 Before downloading and installing this plugin please get familiar with our [terms and conditions](https://prodii.com/#terms).
 
 == Installation ==
-= On Your WordPress site =
-1. Install and activate Prodii's Plugin into a page of your WordPress site.
-2. Copy/paste your Publisher Key from Prodii into your page
-3. Select Full Page Width - then Publish
+= 1. Download, install, and activate Prodii Plugin on your Wordpress site. =
+Drop the short code on a  page - and set 'full width'. 
 
-= On https://prodii.com =
-1. Sign Up
-2. Create your company and fill out the company information
-3. Create team(s)
-4. Invite people
-5. Acquire a Publisher Key for your homepage (payed service)
+Demo-shortcodes: 
+Publishing a team is a premium service; Copy and paste the short codes provided below into a full-width page on Wordpress, to see what your company page potentially may look like.
+
+Try these demo-short codes to make see a sample design and make sure it works with your wordpress theme. 
+
+Copenhagen-light, free template (included in subscription)
+Demo of a company page with a startpage, 2 team profile pages and 4 employee profiles: [http://blog.prodii.com/templates/copenhagen-light/](http://blog.prodii.com/templates/copenhagen-light/) 
+Company shortcode: [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="copenhagen light"]
+
+Demo of a team page with one team profile and 3 employee profiles:
+Team short code: [careerpages key="WjEK4UWFcApDLsFR" level="Team" ids="56" template="copenhagen light"]
+
+Demeter and Helios, premium templates
+Demo (paid teamplate): http://blog.prodii.com/templates/demeter
+shortcode: [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="demeter"]
+
+Demo (paid teamplate): http://blog.prodii.com/templates/helios
+ [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="helios"]
+
+= 2. Get your own short code on https://prodii.com =
+Create your account on [https://prodii.com](https://prodii.com). Fill out the company and team templates and use our team invitation wizard enabling you to easily gather information about your co-workers. Easy for you and easy for them. 
+
+= 3. Buy team subscriptions =
+Select design template and generate your own shortcode
+Pricing:  
+Subscription: 7€/team monthly (all team profiles included). 
+Templates: to use as you please as long as you like for as many teams as you please
+Premium templates starts at 49€ -
+Customised colors and fonts: 10€
+Customised language file: 10€  
+
+= 4. Paste short codes into full width pages. =
+You can create as  many short codes combination as you like. 
 
 == Frequently Asked Questions ==
 = How do i get my Publisher key? =
