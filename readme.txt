@@ -11,37 +11,45 @@ Expose your company teams and people in minutes.
 Prodii collects data for you from multiple medias to integrate with your personal homepage.
 
 == Description ==
+Tell about your people and skills on your intranet and home page. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.
+With Prodii you can create a professional profile section for your company, team and people; a vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation. 
 
-= Enhance your digital brand in co-creation with people you trust =
-* Tell about your people and skills on your intranet and home page.
-* Include employee profiles and showcase your organisation on your company home page.
-* Save time and trouble while bringing your employer brand to a new level. 
+Prodii Company and career page Plugin is a cloud-based plugin you can publish on a web page. Create a Prodii account to access the team invitation module and design templates (pro version).
 
-= Prodii makes branding smart for.. =
-* Organisations who are proud of their people.
-* Employees who are proud of their workplace.
-* Professionals who are proud of what they do.
-* Please contact us in case of troubles - we are here to make this plugin work for you!
+= This is how it works =
+1. Install Wordpress plugin 
+2. Go to Prodii.com and create an account
+3. Buy team subscriptions, select design template and generate your own shortcode
+4. Paste shortcodes into full.width pages. Done! 
+
+For further details and demo short codes: Please look under "Installation" 
+
+Demo of a free template company page with a startpage, 2 team profile pages and 4 employee profiles: [http://blog.prodii.com/templates/copenhagen-light/](http://blog.prodii.com/templates/copenhagen-light/) 
+
+Demo (paid teamplate): [http://blog.prodii.com/templates/helios](http://blog.prodii.com/templates/helios)
+
+Major features in Prodii's Company, Team and People presentation plugin:
+
+Contact Us Page Features
+Works with WordPress Themes
+Fully Mobile responsive
+Cross browser optimization
+Create profiles for people, departments, branch locations, teams and groups
+Local or international location display on dynamic map.
+Profiles include Title, photo, bio, skills, dynamic map, social icons
+Shortcode feature – add a contact profile to any page via shortcode. (Pro Version feature)
+Customize the look of your profile page without touching the code. (Version feature)
+Drill-down detailed employee biography profiles (pre populated)
 
 = NB! Please read carefully before you install =
-* You'll need a Prodii PUBLISHER KEY to use this plug-in. 
-* Sign Up now: https://prodii.com (no credit card required)
-* Follow instructions on "screenshots" or on our [Help page](http://blog.prodii.com)
-* Please contact us in case of troubles - we are here to make this plugin work for you!
-* Please make sure you have the newest version of WP and our plugin installed.
-
-The presentation on your site holds of up to 3 page levels. Depending on wich template and theme you have selected, your company profile page will consist of a Company, a Team and a Profile view.
-Prodii company, team and people profiling is a service plugin provided to professional users of prodii.com. Before downloading and installing this plugin please get familiar with our terms and conditions.
-
-= Major features in Prodii's Company, Team and People presentation plugin include =
-* Responsive Company presentation in 3 levels
-* Responsive Team presentation in 2 levels
-* Responsive People presentation
-
-= Future features in Prodii's Company and Team presentation plugin include =
-* Infographics for the initial templates and themes coming up soon
-* More templates and themes coming up soon
-* Map visualizations
+You'll need a Prodii PUBLISHER KEY to use this plug-in.
+Sign Up now: [https://prodii.com](https://prodii.com) (no credit card required)
+Follow instructions on "screenshots" and our [Help page](http://blog.prodii.com)
+Please contact us in case of troubles - we are here to make this plugin work for you!
+Please make sure you have the newest version of WP and our plugin installed.
+More templates and themes coming up soon
+Prodii company, team and people profiling is a service plugin provided to professional users of prodii.com. 
+Before downloading and installing this plugin please get familiar with our [terms and conditions](https://prodii.com/#terms).
 
 == Installation ==
 = On Your WordPress site =
