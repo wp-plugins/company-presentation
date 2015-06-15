@@ -84,11 +84,11 @@ Create your account on [https://prodii.com](https://prodii.com). Fill out the co
 = 3. Buy team subscriptions =
 Select design template and generate your own shortcode
 Pricing:  
-Subscription: 7€/team monthly (all team profiles included). 
+Subscription: 7&euro;/team monthly (all team profiles included). 
 Templates: to use as you please as long as you like for as many teams as you please
-Premium templates starts at 49€ -
-Customised colors and fonts: 10€
-Customised language file: 10€  
+Premium templates starts at 49&euro; -
+Customised colors and fonts: 10&euro;
+Customised language file: 10&euro;  
 
 = 4. Paste short codes into full width pages. =
 You can create as  many short codes combination as you like. 
