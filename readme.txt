@@ -56,8 +56,7 @@ Before downloading and installing this plugin please get familiar with our [term
 = 1. Download, install, and activate Prodii Plugin on your Wordpress site. =
 Drop the short code on a  page - and set 'full width'. 
 
-Demo-shortcodes: 
-
+Demo-shortcodes:
 Publishing a team is a premium service; Copy and paste the short codes provided below into a full-width page on Wordpress, to see what your company page potentially may look like.
 
 Try these demo-short codes to make see a sample design and make sure it works with your wordpress theme. 
