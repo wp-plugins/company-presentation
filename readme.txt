@@ -38,7 +38,7 @@ Cross browser optimization
 Create profiles for people, departments, branch locations, teams and groups
 Local or international location display on dynamic map.
 Profiles include Title, photo, bio, skills, dynamic map, social icons
-Shortcode feature – add a contact profile to any page via shortcode. (Pro Version feature)
+Shortcode feature - add a contact profile to any page via shortcode. (Pro Version feature)
 Customize the look of your profile page without touching the code. (Version feature)
 Drill-down detailed employee biography profiles (pre populated)
 
