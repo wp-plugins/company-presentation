@@ -1,6 +1,6 @@
 === Company, Team and People presentation ===
 Contributors: Ralph Rezende
-Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
+Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, careerpage, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
 Requires at least: 4.0
 Tested up to: 4.2.2
 Stable tag: 3.0.3
@@ -9,9 +9,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A professional profile section with an 'About Us' Page with visual Company, Team and People profiles.
 
+== Description ==
 Prodii displays content of your choice such as photo, bio, contact information, skills of your employees, team and company where each employee can have their own page.
 
-== Description ==
 Tell about your people and skills on your intranet and home page. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.
 With Prodii you can create a professional profile section for your company, team and people; a vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation. 
 
@@ -56,9 +56,8 @@ Before downloading and installing this plugin please get familiar with our [term
 = 1. Download, install, and activate Prodii Plugin on your Wordpress site. =
 Drop the short code on a  page - and set 'full width'. 
 
-Demo-shortcodes:
+**Demo-shortcodes:**
 Publishing a team is a premium service; Copy and paste the short codes provided below into a full-width page on Wordpress, to see what your company page potentially may look like.
-
 Try these demo-short codes to make see a sample design and make sure it works with your wordpress theme. 
 
 Copenhagen-light, free template (included in subscription)
@@ -71,11 +70,10 @@ Team short code: [careerpages key="WjEK4UWFcApDLsFR" level="Team" ids="56" templ
 
 Demeter and Helios, premium templates
 
-Demo (paid teamplate): http://blog.prodii.com/templates/demeter
-
+**Demo (paid teamplate): **http://blog.prodii.com/templates/demeter
 Shortcode: [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="demeter"]
 
-Demo (paid teamplate): http://blog.prodii.com/templates/helios
+**Demo (paid teamplate): **http://blog.prodii.com/templates/helios
  [careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="helios"]
 
 = 2. Get your own short code on https://prodii.com =
