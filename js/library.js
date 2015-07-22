@@ -1,6 +1,11 @@
 // General, inserted by Ralph
 //=============================================================
 
+document.onreadystatechange = function() {
+    if (document.readyState === 'complete') 
+        jQuery(document).trigger('fontfaceapplied');
+};
+
 function delayedRedirect(uri, delay) {
 	setTimeout('location.replace("'+urlBase+'/'+uri+'")', delay);
 }
@@ -17,6 +22,16 @@ function maximizeWindow() {
 	} else if (document.layers||document.getElementById) {
 		window.resizeTo(screen.width, screen.height);
 	}
+}
+
+function resizeProdiiIframe(id, domain) {
+	var iframe = document.getElementById(id);
+	window.addEventListener("message", function(event) {
+		if (event.origin !== domain) return; // only accept messages from the specified domain
+		if (isNaN(event.data)) return; // only accept something which can be parsed as a number
+		var height = parseInt(event.data) + 10; // add some extra height to avoid scrollbar
+		iframe.height = height + "px";
+	}, false);
 }
 
 
@@ -232,7 +247,6 @@ function drawPositionsGraph2(parentid, cssprefix, industriesdata) {
 			var canvasparent = jQuery("#"+parentid);
 
 			var noofindustries = parseInt(getCanvasCss(canvasparent, cssprefix+'positionsgraph2canvasnoofindustries', 'orphans'));
-			console.log(noofindustries);
 			var outerradius = parseFloat(getCanvasCss(canvasparent, cssprefix+'positionsgraph2canvasouterradius', 'height'));
 			var innerradius = parseFloat(getCanvasCss(canvasparent, cssprefix+'positionsgraph2canvasinnerradius', 'height'));
 			var horizontalspace = parseFloat(getCanvasCss(canvasparent, cssprefix+'positionsgraph2canvashorizontalspace', 'width'));
@@ -569,144 +583,146 @@ function drawPortfolioGraph2(parentid, cssprefix, portfoliodata) {
 		var canvas = document.getElementById('canvas_'+parentid);
 		if (canvas) canvas.parentNode.removeChild(canvas);
 
-		var webicons = {1:"0xf0e1", 2:"0xf099", 3:"0xf09a", 4:"0xf1a5", 5:"0xf1e7", 6:"0xf0d5", 7:"0xf167", 8:"0xf0d2"};
+		var webicons = {1:"0xf0e1", 2:"0xf099", 3:"0xf09a", 4:"0xf1a5", 5:"0xf1e7", 6:"0xf0d5", 7:"0xf167", 8:"0xf0d2", 9:"0xf0d2", 10:"0xf0d2"};
 		
 		var originalcanvasparent = jQuery("#"+parentid).clone(true);
 		jQuery("#"+parentid).show();
 		var width = jQuery("#"+parentid).width();
-		jQuery("#"+parentid).replaceWith(originalcanvasparent);
-		var canvasparent = jQuery("#"+parentid);
+		if (width > 0) {
+			jQuery("#"+parentid).replaceWith(originalcanvasparent);
+			var canvasparent = jQuery("#"+parentid);
 
-		var maxyear = new Date();
-		maxyear = maxyear.getFullYear();
-		var minyear = null;
-		var noofmedias = 0;
-		for (var mediaid in portfoliodata) {
-			if (mediaid > 0 && portfoliodata[mediaid]["mediacreated"]) {
-				minyear = minyear === null || portfoliodata[mediaid]["mediacreated"] < minyear ? portfoliodata[mediaid]["mediacreated"] : minyear;
-				noofmedias++;
+			var maxyear = new Date();
+			maxyear = maxyear.getFullYear();
+			var minyear = null;
+			var noofmedias = 0;
+			for (var mediaid in portfoliodata) {
+				if (mediaid > 0 && portfoliodata[mediaid]["mediacreated"]) {
+					minyear = minyear === null || portfoliodata[mediaid]["mediacreated"] < minyear ? portfoliodata[mediaid]["mediacreated"] : minyear;
+					noofmedias++;
+				}
 			}
-		}
-		minyear = new Date(parseInt(minyear) * 1000);
-		minyear = minyear.getFullYear();
-		
-		var iconWidth = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediaicon', 'height'));
-		var iconHeight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediaicon', 'width'));
-		var mediabarfont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarfont', 'font');
-		var sincefont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvassincefont', 'font');
-		var yearfont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasyearfont', 'font');
-		var mediabarfontcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarfont', 'color');
-		var sincefontcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvassincefont', 'color');
-		var yearfontcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasyearfont', 'color');
-		var axiscolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasaxiscolor', 'color');
-		var mediacolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarcolor', 'color');
-		var spacebetween = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasspacebetween', 'height'));
-		var mediabarheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarheight', 'height'));
-		var spacetoxaxis = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasspacetoxaxis', 'height'));
-		var xaxisthickness = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasxaxisthickness', 'height'));
-		var bullitradius = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasbullitradius', 'height'));
-		var lineover = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvaslineover', 'height'));
-		var lineunder = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvaslineunder', 'height'));
-		var yearlineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasyearlineheight', 'line-height'));
-		var mediasymbolfont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediasymbol', 'font');
-		var mediasymbolcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediasymbol', 'color');
+			minyear = new Date(parseInt(minyear) * 1000);
+			minyear = minyear.getFullYear();
+			
+			var iconWidth = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediaicon', 'height'));
+			var iconHeight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediaicon', 'width'));
+			var mediabarfont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarfont', 'font');
+			var sincefont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvassincefont', 'font');
+			var yearfont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasyearfont', 'font');
+			var mediabarfontcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarfont', 'color');
+			var sincefontcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvassincefont', 'color');
+			var yearfontcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasyearfont', 'color');
+			var axiscolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasaxiscolor', 'color');
+			var mediacolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarcolor', 'color');
+			var spacebetween = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasspacebetween', 'height'));
+			var mediabarheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediabarheight', 'height'));
+			var spacetoxaxis = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasspacetoxaxis', 'height'));
+			var xaxisthickness = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasxaxisthickness', 'height'));
+			var bullitradius = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasbullitradius', 'height'));
+			var lineover = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvaslineover', 'height'));
+			var lineunder = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvaslineunder', 'height'));
+			var yearlineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio2canvasyearlineheight', 'line-height'));
+			var mediasymbolfont = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediasymbol', 'font');
+			var mediasymbolcolor = getCanvasCss(canvasparent, cssprefix+'portfolio2canvasmediasymbol', 'color');
 
-		var height = lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis + xaxisthickness + (lineunder > yearlineheight ? lineunder : yearlineheight);
+			var height = lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis + xaxisthickness + (lineunder > yearlineheight ? lineunder : yearlineheight);
 
-		canvasparent.append('<canvas id="canvas_'+parentid+'" height="'+height+'" width="'+width+'"></canvas>');
+			canvasparent.append('<canvas id="canvas_'+parentid+'" height="'+height+'" width="'+width+'"></canvas>');
 
-		canvas = document.getElementById('canvas_'+parentid);
-		var c2 = canvas.getContext('2d');
-		
-		var canvasyear;
-		if (maxyear - minyear > 0) {
-			canvasyear = width / (maxyear - minyear + 1);
-		} else {
-			// Handle max = min
-		}
-		
-		var step = 1;
-		var yeartextwidth = 50;
-		var noofsteps = Math.ceil((maxyear-minyear)/step);
-		while (width/noofsteps < yeartextwidth) {
-			step++;
-			noofsteps = Math.ceil((maxyear-minyear)/step);
-		}
-		
-		for (var y = maxyear; y >= minyear; y -= step) {
-			// Year line
-			if (y < maxyear) {
+			canvas = document.getElementById('canvas_'+parentid);
+			var c2 = canvas.getContext('2d');
+			
+			var canvasyear;
+			if (maxyear - minyear > 0) {
+				canvasyear = width / (maxyear - minyear + 1);
+			} else {
+				// Handle max = min
+			}
+			
+			var step = 1;
+			var yeartextwidth = 50;
+			var noofsteps = Math.ceil((maxyear-minyear)/step);
+			while (width/noofsteps < yeartextwidth && step <= noofsteps) {
+				step++;
+				noofsteps = Math.ceil((maxyear-minyear)/step);
+			}
+			
+			for (var y = maxyear; y >= minyear; y -= step) {
+				// Year line
+				if (y < maxyear) {
+					c2.beginPath();
+					c2.moveTo(canvasyear * (y - minyear + (step + 1)/2), 0);
+					c2.lineTo(canvasyear * (y - minyear + (step + 1)/2), height);
+					c2.lineWidth = 1;
+					c2.strokeStyle = yearfontcolor;
+					c2.stroke();
+					c2.closePath();
+				}
+				// Year text
 				c2.beginPath();
-				c2.moveTo(canvasyear * (y - minyear + (step + 1)/2), 0);
-				c2.lineTo(canvasyear * (y - minyear + (step + 1)/2), height);
-				c2.lineWidth = 1;
-				c2.strokeStyle = yearfontcolor;
-				c2.stroke();
+				c2.textBaseline="bottom";
+				c2.fillStyle = y == maxyear ? axiscolor : yearfontcolor;
+				c2.textAlign = "center";
+				c2.font = yearfont;
+				c2.fillText(y, canvasyear / 2 + canvasyear * (y - minyear), lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis + xaxisthickness + yearlineheight);
+				c2.fill();
 				c2.closePath();
-			}
-			// Year text
+			}		
+
+			// X-axis
 			c2.beginPath();
-			c2.textBaseline="bottom";
-			c2.fillStyle = y == maxyear ? axiscolor : yearfontcolor;
-			c2.textAlign = "center";
-			c2.font = yearfont;
-			c2.fillText(y, canvasyear / 2 + canvasyear * (y - minyear), lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis + xaxisthickness + yearlineheight);
+			c2.fillStyle = axiscolor;
+			c2.fillRect(0, lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis, width, xaxisthickness);
+			c2.closePath();
+			// Bullit
+			c2.beginPath();
+			c2.arc(width - bullitradius, lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis + xaxisthickness / 2, bullitradius, 0, 2 * Math.PI, false);
+			c2.fillStyle = axiscolor;
 			c2.fill();
 			c2.closePath();
-		}		
 
-		// X-axis
-		c2.beginPath();
-		c2.fillStyle = axiscolor;
-		c2.fillRect(0, lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis, width, xaxisthickness);
-		c2.closePath();
-		// Bullit
-		c2.beginPath();
-		c2.arc(width - bullitradius, lineover + mediabarheight * noofmedias + spacebetween * (noofmedias - 1) + spacetoxaxis + xaxisthickness / 2, bullitradius, 0, 2 * Math.PI, false);
-		c2.fillStyle = axiscolor;
-		c2.fill();
-		c2.closePath();
-
-		// Medias
-		var currentheight = lineover;
-		for (var mediaid in portfoliodata) {
-			if (mediaid > 0 && portfoliodata[mediaid]["mediacreated"]) {
-				mediayear = new Date(parseInt(portfoliodata[mediaid]["mediacreated"]) * 1000);
-				mediayear = mediayear.getFullYear();
-				// Rectangle
-				c2.beginPath();
-				c2.fillStyle = mediacolor;
-				c2.fillRect(canvasyear * (mediayear - minyear), currentheight, width-canvasyear * (mediayear - minyear), mediabarheight);
-				c2.closePath();
-				// Icon
-				c2.beginPath();
-				c2.textBaseline="middle";
-				c2.fillStyle = mediasymbolcolor;
-				c2.textAlign = "center";
-				c2.font = mediasymbolfont;
-				c2.fillText(String.fromCharCode(webicons[mediaid]), canvasyear * (mediayear - minyear) + 15, currentheight + mediabarheight / 2);
-				c2.fill();
-				c2.closePath();
-				// Name
-				c2.beginPath();
-				c2.textBaseline="alphabetic";
-				c2.fillStyle = mediabarfontcolor;
-				c2.textAlign = "left";
-				c2.font = mediabarfont;
-				c2.fillText(portfoliodata[mediaid]["alias"], canvasyear * (mediayear - minyear) + 30, currentheight + mediabarheight / 2 + 5);
-				c2.fill();
-				c2.closePath();
-				// Since
-				c2.beginPath();
-				c2.textBaseline="alphabetic";
-				c2.fillStyle = sincefontcolor;
-				c2.textAlign = "right";
-				c2.font = sincefont;
-				c2.fillText(mediayear, width - 10, currentheight + mediabarheight / 2 + 5);
-				c2.fill();
-				c2.closePath();
-				
-				currentheight += spacebetween + mediabarheight;
+			// Medias
+			var currentheight = lineover;
+			for (var mediaid in portfoliodata) {
+				if (mediaid > 0 && portfoliodata[mediaid]["mediacreated"]) {
+					mediayear = new Date(parseInt(portfoliodata[mediaid]["mediacreated"]) * 1000);
+					mediayear = mediayear.getFullYear();
+					// Rectangle
+					c2.beginPath();
+					c2.fillStyle = mediacolor;
+					c2.fillRect(canvasyear * (mediayear - minyear), currentheight, width-canvasyear * (mediayear - minyear), mediabarheight);
+					c2.closePath();
+					// Icon
+					c2.beginPath();
+					c2.textBaseline="middle";
+					c2.fillStyle = mediasymbolcolor;
+					c2.textAlign = "center";
+					c2.font = mediasymbolfont;
+					c2.fillText(String.fromCharCode(webicons[mediaid]), canvasyear * (mediayear - minyear) + 15, currentheight + mediabarheight / 2);
+					c2.fill();
+					c2.closePath();
+					// Name
+					c2.beginPath();
+					c2.textBaseline="alphabetic";
+					c2.fillStyle = mediabarfontcolor;
+					c2.textAlign = "left";
+					c2.font = mediabarfont;
+					c2.fillText(portfoliodata[mediaid]["alias"], canvasyear * (mediayear - minyear) + 30, currentheight + mediabarheight / 2 + 5);
+					c2.fill();
+					c2.closePath();
+					// Since
+					c2.beginPath();
+					c2.textBaseline="alphabetic";
+					c2.fillStyle = sincefontcolor;
+					c2.textAlign = "right";
+					c2.font = sincefont;
+					c2.fillText(mediayear, width - 10, currentheight + mediabarheight / 2 + 5);
+					c2.fill();
+					c2.closePath();
+					
+					currentheight += spacebetween + mediabarheight;
+				}
 			}
 		}
 	}
@@ -721,175 +737,177 @@ function drawPortfolioGraph3(parentid, cssprefix, portfoliodata, audiencesymbol,
 		var originalcanvasparent = jQuery("#"+parentid).clone(true);
 		jQuery("#"+parentid).show();
 		var width = jQuery("#"+parentid).width();
-		jQuery("#"+parentid).replaceWith(originalcanvasparent);
-		var canvasparent = jQuery("#"+parentid);
+		if (width > 0) {
+			jQuery("#"+parentid).replaceWith(originalcanvasparent);
+			var canvasparent = jQuery("#"+parentid);
 
-		var color1 = getCanvasCss(canvasparent, cssprefix+'portfolio3canvascolor1', 'color');
-		var color2 = getCanvasCss(canvasparent, cssprefix+'portfolio3canvascolor2', 'color');
-		var color3 = getCanvasCss(canvasparent, cssprefix+'portfolio3canvascolor3', 'color');
-		var audiencesymbolfont = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasaudiencesymbol', 'font');
-		var audiencesymbolcolor = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasaudiencesymbol', 'color');
-		var audiencesymbollineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasaudiencesymbol', 'margin'));
-		var resourcesymbolfont = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasresourcessymbol', 'font');
-		var resourcesymbolcolor = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasresourcessymbol', 'color');
-		var resourcesymbollineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasresourcessymbol', 'margin'));
-		var numberfont = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasnumber', 'font');
-		var numbercolor = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasnumber', 'color');
-		var numberlineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasnumber', 'line-height'));
-		var text1font = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext1', 'font');
-		var text1color = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext1', 'color');
-		var text1lineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext1', 'line-height'));
-		var text2font = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext2', 'font');
-		var text2color = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext2', 'color');
-		var text2lineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext2', 'line-height'));
-		var spacebetweencircles = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasspacebetweencircles', 'width'));
-		var roundelthickness = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasroundelthickness', 'width'));
-		var outerradius = (width - spacebetweencircles) / 4;
-		var innerradius = outerradius - roundelthickness;
-		
-		var vertical = new Array(2 * outerradius, numberlineheight, text1lineheight, text2lineheight);
-		var height = Math.max.apply(Math, vertical) + 1;
+			var color1 = getCanvasCss(canvasparent, cssprefix+'portfolio3canvascolor1', 'color');
+			var color2 = getCanvasCss(canvasparent, cssprefix+'portfolio3canvascolor2', 'color');
+			var color3 = getCanvasCss(canvasparent, cssprefix+'portfolio3canvascolor3', 'color');
+			var audiencesymbolfont = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasaudiencesymbol', 'font');
+			var audiencesymbolcolor = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasaudiencesymbol', 'color');
+			var audiencesymbollineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasaudiencesymbol', 'margin'));
+			var resourcesymbolfont = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasresourcessymbol', 'font');
+			var resourcesymbolcolor = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasresourcessymbol', 'color');
+			var resourcesymbollineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasresourcessymbol', 'margin'));
+			var numberfont = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasnumber', 'font');
+			var numbercolor = getCanvasCss(canvasparent, cssprefix+'portfolio3canvasnumber', 'color');
+			var numberlineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasnumber', 'line-height'));
+			var text1font = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext1', 'font');
+			var text1color = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext1', 'color');
+			var text1lineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext1', 'line-height'));
+			var text2font = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext2', 'font');
+			var text2color = getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext2', 'color');
+			var text2lineheight = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvastext2', 'line-height'));
+			var spacebetweencircles = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasspacebetweencircles', 'width'));
+			var roundelthickness = parseFloat(getCanvasCss(canvasparent, cssprefix+'portfolio3canvasroundelthickness', 'width'));
+			var outerradius = (width - spacebetweencircles) / 4;
+			var innerradius = outerradius - roundelthickness;
+			
+			var vertical = new Array(2 * outerradius, numberlineheight, text1lineheight, text2lineheight);
+			var height = Math.max.apply(Math, vertical) + 1;
 
-		canvasparent.append('<canvas id="canvas_'+parentid+'" height="'+height+'" width="'+width+'"></canvas>');
-		
-		canvas = document.getElementById("canvas_"+parentid);
-		var c2 = canvas.getContext('2d');
+			canvasparent.append('<canvas id="canvas_'+parentid+'" height="'+height+'" width="'+width+'"></canvas>');
+			
+			canvas = document.getElementById("canvas_"+parentid);
+			var c2 = canvas.getContext('2d');
 
-		var followers = portfoliodata["networkfollowers"];
-		var connections = portfoliodata["networkconnections"];
-		var followings = portfoliodata["networkfollowings"];
-		
-		// Audience circle
-		var currentangle = -Math.PI / 2;
-		anglefactor = 2 * Math.PI / (followers + connections);
-		centerXaudience = outerradius;
-		centerYaudience = outerradius;
-		// Connections arc
-		diffangle = anglefactor * connections;
-		c2.beginPath();
-		c2.moveTo(centerXaudience + innerradius * Math.cos(currentangle), centerYaudience + innerradius * Math.sin(currentangle));
-		c2.lineTo(centerXaudience + outerradius * Math.cos(currentangle), centerYaudience + outerradius * Math.sin(currentangle));
-		c2.arc(centerXaudience, centerYaudience, outerradius, currentangle, currentangle + diffangle, false);
-		c2.lineTo(centerXaudience + innerradius * Math.cos(currentangle + diffangle), centerYaudience + innerradius * Math.sin(currentangle + diffangle));
-		c2.arc(centerXaudience, centerYaudience, innerradius, currentangle + diffangle, currentangle, true);
-		c2.fillStyle = color2;
-		c2.fill();
-		c2.closePath();
-		currentangle += diffangle;
-		// Followers arc
-		diffangle = anglefactor * followers;
-		c2.beginPath();
-		c2.moveTo(centerXaudience + innerradius * Math.cos(currentangle), centerYaudience + innerradius * Math.sin(currentangle));
-		c2.lineTo(centerXaudience + outerradius * Math.cos(currentangle), centerYaudience + outerradius * Math.sin(currentangle));
-		c2.arc(centerXaudience, centerYaudience, outerradius, currentangle, currentangle + diffangle, false);
-		c2.lineTo(centerXaudience + innerradius * Math.cos(currentangle + diffangle), centerYaudience + innerradius * Math.sin(currentangle + diffangle));
-		c2.arc(centerXaudience, centerYaudience, innerradius, currentangle + diffangle, currentangle, true);
-		c2.fillStyle = color1;
-		c2.fill();
-		c2.closePath();
-		currentangle += diffangle;
-		// Symbol
-		c2.beginPath();
-		c2.textBaseline="middle";
-		c2.fillStyle = audiencesymbolcolor;
-		c2.textAlign = "center";
-		c2.font = audiencesymbolfont;
-		c2.fillText(String.fromCharCode(audiencesymbol), centerXaudience, outerradius + audiencesymbollineheight);
-		c2.fill();
-		c2.closePath();
-		// Text 1
-		c2.beginPath();
-		c2.textBaseline="bottom";
-		c2.fillStyle = text1color;
-		c2.textAlign = "center";
-		c2.font = text1font;
-		c2.fillText(audiencetext1, centerXaudience, text1lineheight);
-		c2.fill();
-		c2.closePath();
-		// Number
-		c2.beginPath();
-		c2.textBaseline="bottom";
-		c2.fillStyle = numbercolor;
-		c2.textAlign = "center";
-		c2.font = numberfont;
-		c2.fillText(followers + connections, centerXaudience, numberlineheight);
-		c2.fill();
-		c2.closePath();
-		// Text 2
-		c2.beginPath();
-		c2.textBaseline="bottom";
-		c2.fillStyle = text2color;
-		c2.textAlign = "center";
-		c2.font = text2font;
-		c2.fillText(audiencetext2, centerXaudience, text2lineheight);
-		c2.fill();
-		c2.closePath();
+			var followers = portfoliodata["networkfollowers"];
+			var connections = portfoliodata["networkconnections"];
+			var followings = portfoliodata["networkfollowings"];
+			
+			// Audience circle
+			var currentangle = -Math.PI / 2;
+			anglefactor = 2 * Math.PI / (followers + connections);
+			centerXaudience = outerradius;
+			centerYaudience = outerradius;
+			// Connections arc
+			diffangle = anglefactor * connections;
+			c2.beginPath();
+			c2.moveTo(centerXaudience + innerradius * Math.cos(currentangle), centerYaudience + innerradius * Math.sin(currentangle));
+			c2.lineTo(centerXaudience + outerradius * Math.cos(currentangle), centerYaudience + outerradius * Math.sin(currentangle));
+			c2.arc(centerXaudience, centerYaudience, outerradius, currentangle, currentangle + diffangle, false);
+			c2.lineTo(centerXaudience + innerradius * Math.cos(currentangle + diffangle), centerYaudience + innerradius * Math.sin(currentangle + diffangle));
+			c2.arc(centerXaudience, centerYaudience, innerradius, currentangle + diffangle, currentangle, true);
+			c2.fillStyle = color2;
+			c2.fill();
+			c2.closePath();
+			currentangle += diffangle;
+			// Followers arc
+			diffangle = anglefactor * followers;
+			c2.beginPath();
+			c2.moveTo(centerXaudience + innerradius * Math.cos(currentangle), centerYaudience + innerradius * Math.sin(currentangle));
+			c2.lineTo(centerXaudience + outerradius * Math.cos(currentangle), centerYaudience + outerradius * Math.sin(currentangle));
+			c2.arc(centerXaudience, centerYaudience, outerradius, currentangle, currentangle + diffangle, false);
+			c2.lineTo(centerXaudience + innerradius * Math.cos(currentangle + diffangle), centerYaudience + innerradius * Math.sin(currentangle + diffangle));
+			c2.arc(centerXaudience, centerYaudience, innerradius, currentangle + diffangle, currentangle, true);
+			c2.fillStyle = color1;
+			c2.fill();
+			c2.closePath();
+			currentangle += diffangle;
+			// Symbol
+			c2.beginPath();
+			c2.textBaseline="middle";
+			c2.fillStyle = audiencesymbolcolor;
+			c2.textAlign = "center";
+			c2.font = audiencesymbolfont;
+			c2.fillText(String.fromCharCode(audiencesymbol), centerXaudience, outerradius + audiencesymbollineheight);
+			c2.fill();
+			c2.closePath();
+			// Text 1
+			c2.beginPath();
+			c2.textBaseline="bottom";
+			c2.fillStyle = text1color;
+			c2.textAlign = "center";
+			c2.font = text1font;
+			c2.fillText(audiencetext1, centerXaudience, text1lineheight);
+			c2.fill();
+			c2.closePath();
+			// Number
+			c2.beginPath();
+			c2.textBaseline="bottom";
+			c2.fillStyle = numbercolor;
+			c2.textAlign = "center";
+			c2.font = numberfont;
+			c2.fillText(followers + connections, centerXaudience, numberlineheight);
+			c2.fill();
+			c2.closePath();
+			// Text 2
+			c2.beginPath();
+			c2.textBaseline="bottom";
+			c2.fillStyle = text2color;
+			c2.textAlign = "center";
+			c2.font = text2font;
+			c2.fillText(audiencetext2, centerXaudience, text2lineheight);
+			c2.fill();
+			c2.closePath();
 
-		// Resources circle
-		currentangle = -Math.PI / 2;
-		anglefactor = 2 * Math.PI / (followings + connections);
-		centerXresources = width - outerradius;
-		centerYresources = outerradius;
-		// Connections arc
-		diffangle = anglefactor * connections;
-		c2.beginPath();
-		c2.moveTo(centerXresources + innerradius * Math.cos(currentangle), centerYresources + innerradius * Math.sin(currentangle));
-		c2.lineTo(centerXresources + outerradius * Math.cos(currentangle), centerYresources + outerradius * Math.sin(currentangle));
-		c2.arc(centerXresources, centerYresources, outerradius, currentangle, currentangle + diffangle, false);
-		c2.lineTo(centerXresources + innerradius * Math.cos(currentangle + diffangle), centerYresources + innerradius * Math.sin(currentangle + diffangle));
-		c2.arc(centerXresources, centerYresources, innerradius, currentangle + diffangle, currentangle, true);
-		c2.fillStyle = color2;
-		c2.fill();
-		c2.closePath();
-		currentangle += diffangle;
-		// Followers arc
-		diffangle = anglefactor * followings;
-		c2.beginPath();
-		c2.moveTo(centerXresources + innerradius * Math.cos(currentangle), centerYresources + innerradius * Math.sin(currentangle));
-		c2.lineTo(centerXresources + outerradius * Math.cos(currentangle), centerYresources + outerradius * Math.sin(currentangle));
-		c2.arc(centerXresources, centerYresources, outerradius, currentangle, currentangle + diffangle, false);
-		c2.lineTo(centerXresources + innerradius * Math.cos(currentangle + diffangle), centerYresources + innerradius * Math.sin(currentangle + diffangle));
-		c2.arc(centerXresources, centerYresources, innerradius, currentangle + diffangle, currentangle, true);
-		c2.fillStyle = color3;
-		c2.fill();
-		c2.closePath();
-		currentangle += diffangle;
-		// Symbol
-		c2.beginPath();
-		c2.textBaseline="middle";
-		c2.fillStyle = resourcesymbolcolor;
-		c2.textAlign = "center";
-		c2.font = resourcesymbolfont;
-		c2.fillText(String.fromCharCode(resourcessymbol), centerXresources, outerradius + resourcesymbollineheight);
-		c2.fill();
-		c2.closePath();
-		// Text 1
-		c2.beginPath();
-		c2.textBaseline="bottom";
-		c2.fillStyle = text1color;
-		c2.textAlign = "center";
-		c2.font = text1font;
-		c2.fillText(resourcestext1, centerXresources, text1lineheight);
-		c2.fill();
-		c2.closePath();
-		// Number
-		c2.beginPath();
-		c2.textBaseline="bottom";
-		c2.fillStyle = numbercolor;
-		c2.textAlign = "center";
-		c2.font = numberfont;
-		c2.fillText(followings + connections, centerXresources, numberlineheight);
-		c2.fill();
-		c2.closePath();
-		// Text 2
-		c2.beginPath();
-		c2.textBaseline="bottom";
-		c2.fillStyle = text2color;
-		c2.textAlign = "center";
-		c2.font = text2font;
-		c2.fillText(resourcestext2, centerXresources, text2lineheight);
-		c2.fill();
-		c2.closePath();
+			// Resources circle
+			currentangle = -Math.PI / 2;
+			anglefactor = 2 * Math.PI / (followings + connections);
+			centerXresources = width - outerradius;
+			centerYresources = outerradius;
+			// Connections arc
+			diffangle = anglefactor * connections;
+			c2.beginPath();
+			c2.moveTo(centerXresources + innerradius * Math.cos(currentangle), centerYresources + innerradius * Math.sin(currentangle));
+			c2.lineTo(centerXresources + outerradius * Math.cos(currentangle), centerYresources + outerradius * Math.sin(currentangle));
+			c2.arc(centerXresources, centerYresources, outerradius, currentangle, currentangle + diffangle, false);
+			c2.lineTo(centerXresources + innerradius * Math.cos(currentangle + diffangle), centerYresources + innerradius * Math.sin(currentangle + diffangle));
+			c2.arc(centerXresources, centerYresources, innerradius, currentangle + diffangle, currentangle, true);
+			c2.fillStyle = color2;
+			c2.fill();
+			c2.closePath();
+			currentangle += diffangle;
+			// Followers arc
+			diffangle = anglefactor * followings;
+			c2.beginPath();
+			c2.moveTo(centerXresources + innerradius * Math.cos(currentangle), centerYresources + innerradius * Math.sin(currentangle));
+			c2.lineTo(centerXresources + outerradius * Math.cos(currentangle), centerYresources + outerradius * Math.sin(currentangle));
+			c2.arc(centerXresources, centerYresources, outerradius, currentangle, currentangle + diffangle, false);
+			c2.lineTo(centerXresources + innerradius * Math.cos(currentangle + diffangle), centerYresources + innerradius * Math.sin(currentangle + diffangle));
+			c2.arc(centerXresources, centerYresources, innerradius, currentangle + diffangle, currentangle, true);
+			c2.fillStyle = color3;
+			c2.fill();
+			c2.closePath();
+			currentangle += diffangle;
+			// Symbol
+			c2.beginPath();
+			c2.textBaseline="middle";
+			c2.fillStyle = resourcesymbolcolor;
+			c2.textAlign = "center";
+			c2.font = resourcesymbolfont;
+			c2.fillText(String.fromCharCode(resourcessymbol), centerXresources, outerradius + resourcesymbollineheight);
+			c2.fill();
+			c2.closePath();
+			// Text 1
+			c2.beginPath();
+			c2.textBaseline="bottom";
+			c2.fillStyle = text1color;
+			c2.textAlign = "center";
+			c2.font = text1font;
+			c2.fillText(resourcestext1, centerXresources, text1lineheight);
+			c2.fill();
+			c2.closePath();
+			// Number
+			c2.beginPath();
+			c2.textBaseline="bottom";
+			c2.fillStyle = numbercolor;
+			c2.textAlign = "center";
+			c2.font = numberfont;
+			c2.fillText(followings + connections, centerXresources, numberlineheight);
+			c2.fill();
+			c2.closePath();
+			// Text 2
+			c2.beginPath();
+			c2.textBaseline="bottom";
+			c2.fillStyle = text2color;
+			c2.textAlign = "center";
+			c2.font = text2font;
+			c2.fillText(resourcestext2, centerXresources, text2lineheight);
+			c2.fill();
+			c2.closePath();
+		}
 	}
 }
 
@@ -1432,7 +1450,7 @@ function drawSmtiGraph1(parentid, cssprefix, smtiData, centeroffset) {
 	}
 }
 
-function showCareerpagesSmti(obj, mediaid, classname, amount) {
+/*function showCareerpagesSmti(obj, mediaid, classname, amount) {
 	obj.parent().parent().find("#smtiviewall").addClass("careerpagesprofilesmtiviewallgroupdisabled");
 	obj.parent().find(".careerpagesprofilesmtiviewer").removeClass("careerpagesprofilesmtivieweractive");
 	obj.find(".careerpagesprofilesmtiviewer").addClass("careerpagesprofilesmtivieweractive");
@@ -1498,6 +1516,88 @@ function trigDatepicker(obj) {
 	if (datepickerObj.datepicker('widget').is(':hidden')) {
         datepickerObj.datepicker("show").datepicker("widget").show();
     }
+}*/
+
+// Profile Canvas Graph 1 - Profile completed One circle
+function drawProfilesGraph1(parentid, cssprefix, percent, text) {
+	if (percent >= 0) {
+		var canvas = document.getElementById('canvas_'+parentid);
+		if (canvas) canvas.parentNode.removeChild(canvas);
+		
+		var originalcanvasparent = jQuery("#"+parentid).clone(true);
+		jQuery("#"+parentid).show();
+		var width = jQuery("#"+parentid).width();
+		var height = jQuery("#"+parentid).height();
+		if (width > 0 && height > 0) {
+			jQuery("#"+parentid).replaceWith(originalcanvasparent);
+			var canvasparent = jQuery("#"+parentid);
+
+			var signalcolor = getCanvasCss(canvasparent, cssprefix+'profiles1canvassignalcolor', 'color');
+			var neutralcolor = getCanvasCss(canvasparent, cssprefix+'profiles1canvasneutralcolor', 'color');
+			var numberfont = getCanvasCss(canvasparent, cssprefix+'profiles1canvasnumber', 'font');
+			var numbercolor = getCanvasCss(canvasparent, cssprefix+'profiles1canvasnumber', 'color');
+			var numberverticaloffset = parseFloat(getCanvasCss(canvasparent, cssprefix+'profiles1canvasnumber', 'margin'));
+			var textfont = getCanvasCss(canvasparent, cssprefix+'profiles1canvastext', 'font');
+			var textcolor = getCanvasCss(canvasparent, cssprefix+'profiles1canvastext', 'color');
+			var textverticaloffset = parseFloat(getCanvasCss(canvasparent, cssprefix+'profiles1canvastext', 'margin'));
+			var roundelthicknesspercent = parseFloat(getCanvasCss(canvasparent, cssprefix+'profiles1canvasroundelthicknesspercent', 'line-height'));
+			var outerradius = height > width ? width / 2 : height / 2;
+			var innerradius = outerradius - outerradius * roundelthicknesspercent;
+
+			canvasparent.append('<canvas id="canvas_'+parentid+'" height="'+height+'" width="'+width+'"></canvas>');
+			
+			canvas = document.getElementById("canvas_"+parentid);
+			var c2 = canvas.getContext('2d');
+			
+			var currentangle = -Math.PI / 2;
+			var centerX = width / 2;
+			var centerY = height / 2;
+
+			// Signal arc
+			diffangle = 2 * Math.PI * percent / 100;
+			c2.beginPath();
+			c2.moveTo(centerX + innerradius * Math.cos(currentangle), centerY + innerradius * Math.sin(currentangle));
+			c2.lineTo(centerX + outerradius * Math.cos(currentangle), centerY + outerradius * Math.sin(currentangle));
+			c2.arc(centerX, centerY, outerradius, currentangle, currentangle + diffangle, false);
+			c2.lineTo(centerX + innerradius * Math.cos(currentangle + diffangle), centerY + innerradius * Math.sin(currentangle + diffangle));
+			c2.arc(centerX, centerY, innerradius, currentangle + diffangle, currentangle, true);
+			c2.fillStyle = signalcolor;
+			c2.fill();
+			c2.closePath();
+			currentangle += diffangle;
+			// Neutral arc
+			diffangle = 2 * Math.PI - diffangle;
+			c2.beginPath();
+			c2.moveTo(centerX + innerradius * Math.cos(currentangle), centerY + innerradius * Math.sin(currentangle));
+			c2.lineTo(centerX + outerradius * Math.cos(currentangle), centerY + outerradius * Math.sin(currentangle));
+			c2.arc(centerX, centerY, outerradius, currentangle, currentangle + diffangle, false);
+			c2.lineTo(centerX + innerradius * Math.cos(currentangle + diffangle), centerY + innerradius * Math.sin(currentangle + diffangle));
+			c2.arc(centerX, centerY, innerradius, currentangle + diffangle, currentangle, true);
+			c2.fillStyle = neutralcolor;
+			c2.fill();
+			c2.closePath();
+			// Number
+			c2.beginPath();
+			c2.textBaseline="middle";
+			c2.fillStyle = numbercolor;
+			c2.textAlign = "center";
+			c2.font = numberfont;
+			console.log("number Y: "+(centerY + numberverticaloffset));
+			c2.fillText((percent)+'%', centerX, centerY + numberverticaloffset);
+			c2.fill();
+			c2.closePath();
+			// Text
+			c2.beginPath();
+			c2.textBaseline="middle";
+			c2.fillStyle = textcolor;
+			c2.textAlign = "center";
+			c2.font = textfont;
+			console.log("text Y: "+(centerY + textverticaloffset));
+			c2.fillText(text, centerX, centerY + textverticaloffset);
+			c2.fill();
+			c2.closePath();
+		}
+	}
 }
 
 function tabCanvasRefresh(tab, identifier, refresh) {
