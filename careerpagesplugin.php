@@ -7,7 +7,7 @@
 Plugin Name: Careerpages, 
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present your company.
-Version: 3.0.3
+Version: 4.0.0
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/ralphrezendelarsen
 License:
@@ -317,5 +317,189 @@ if (isset($careerpagesMain)) {
 	add_action('wp_enqueue_scripts', array(&$careerpagesMain, 'addHeaderCode'), 111115);
 	add_shortcode('careerpages', array('careerpagesMain', 'careerpages_shortcut'));
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+//////////
+//////////				Admin
+//////////
+////////////////////////////////////////////////////////////////////////////////////
+if (!class_exists("ProdiiAdmin")) {
+	class ProdiiAdmin {
+
+		function ProdiiAdmin() { //constructor
+		}
+
+		function addAdminHeaderCode($hook) {
+			global $prodii_shortcode_page;
+			
+			if ($hook != $prodii_shortcode_page) return;
+			
+			wp_enqueue_style('careerpages_admin_prettify_style', 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css');
+			
+			wp_enqueue_script('careerpages_admin_script', plugins_url('js/careerpagesadmin.js' , __FILE__ ), array('jquery'));
+			wp_localize_script('careerpages_admin_script', 'prodii_vars', array(
+				'prodii_nonce' => wp_create_nonce('prodii_nonce')
+			));
+			wp_enqueue_script('careerpages_admin_prettify_script', 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js', false, '3');
+		}
+
+		//Prints out the admin Prodii description page
+		function prodii_description_page() {
+			echo 	'
+						<div class="wrap">
+							<h2>Prodii Description</h2>
+							<p>Prodii displays content of your choice such as photo, bio, contact information, skills of your employees, team and company where each employee can have their own page.</p>
+							<p>Tell about your people and skills on your intranet and home page. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.</p>
+							<p>With Prodii you can create a professional profile section for your company, team and people; a vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation.</p>
+							<p>Prodii Company and career page Plugin is a cloud-based plugin you can publish on a web page. Create a Prodii account to access the team invitation module and design templates (pro version).</p>
+						</div>
+						';
+		}
+
+		//Prints out the admin key page
+		function prodii_key_page() {
+			$cp_data = array(
+				'action' => 'getKeyData',
+				'key' => get_option("prodii_key")
+			);
+
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://test.prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
+			curl_setopt($ch, CURLOPT_POST, count($cp_data));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+			$data = json_decode(curl_exec($ch), true);
+			curl_close($ch);
+			
+			echo 	'
+						<div class="wrap">
+							<h2>Prodii Plugin Key</h2>
+						';
+			if (isset($data["teamowner"])) {
+				echo 	'
+								<table class="form-table">
+									<tr valign="top">
+										<th scope="row">Teamowner</th>
+										<td>
+											'.$data["teamowner"]["name"].'
+										</td>
+									</tr>
+								</table>
+							';
+			}
+			echo 	'
+							<form method="post" action="options.php">
+						';	
+							settings_fields("prodii-key-settings");
+							do_settings_sections("prodii-key-settings");
+			echo 	'
+								<table class="form-table">
+									<tr valign="top">
+										<th scope="row">Key</th>
+										<td>
+											<input type="text" name="prodii_key" value="'.get_option("prodii_key").'"/>
+										</td>
+									</tr>
+								</table>
+							'.get_submit_button().'
+							</form>
+						</div>
+						';
+		}
+
+		//Prints out the admin shortcode page
+		//function prodii_shortcode_page($hook) {
+		function prodii_shortcode_page() {
+			echo 	'
+						<div class="wrap">
+							<h2>Prodii Plugin Shortcode</h2>
+							<form id="prodii_shortcode_form" method="post" action="'.admin_url('admin.php').'?page=prodii-shortcode">
+								'.self::prodii_shortcode_content().'
+							</form>
+						</div>
+						';
+
+		}
+		
+		function prodii_shortcode_content() {
+			//if (is_array($_REQUEST)) $content = "From prodii_shortcode_content <pre>".print_r($_REQUEST, true)."</pre>";
+			$cp_data = array(
+				'action' => 'getShortcodeHtml',
+				'key' => get_option("prodii_key"),
+				'templateid' => isset($_REQUEST["prodii_templateid"]) ? $_REQUEST["prodii_templateid"] : '',
+				'css' => isset($_REQUEST["prodii_css"]) ? $_REQUEST["prodii_css"] : '',
+				'companyid' => isset($_REQUEST["prodii_companyid"]) ? $_REQUEST["prodii_companyid"] : 0,
+				'teamids' => isset($_REQUEST["prodii_teamids"]) ? $_REQUEST["prodii_teamids"] : '',
+				'teamid' => isset($_REQUEST["prodii_teamid"]) ? $_REQUEST["prodii_teamid"] : 0,
+				'memberid' => isset($_REQUEST["prodii_memberid"]) ? $_REQUEST["prodii_memberid"] : 0,
+				'view' => isset($_REQUEST["prodii_view"]) ? $_REQUEST["prodii_view"] : 'tab-company'
+			);
+			//$content = $content."From prodii_shortcode_content <pre>".print_r($cp_data, true)."</pre>";
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://test.prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
+			curl_setopt($ch, CURLOPT_POST, count($cp_data));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+			curl_setopt($ch, CURLOPT_FAILONERROR, true); 
+			$content = json_decode(curl_exec($ch), true);
+			if(curl_errno($ch)) {
+				$content = json_decode('cURL error ({$errno}):\n {$error_message}');
+			}
+			curl_close($ch);
+			
+			return $content;
+		}
+
+		function ajax_prodii_shortcode_content() {
+			if (!isset($_POST["prodii_nonce"]) || !wp_verify_nonce($_POST["prodii_nonce"], 'prodii_nonce')) die('Permissions check failed');
+			
+			//echo "From ajax_prodii_shortcode_content <pre>".print_r($_POST, true)."</pre>";
+			echo self::prodii_shortcode_content();
+			
+			die();
+		}
+	}
+}
+
+
+if (class_exists("ProdiiAdmin")) {
+	$prodiiAdmin = new ProdiiAdmin();
+}
+		
+if (!function_exists("update_prodii_key")) {
+	function update_prodii_key() {
+		register_setting('prodii-key-settings', 'prodii_key');
+	}
+}
+
+//Initialize the admin panel
+if (!function_exists("prodii_adminpanel")) {
+	function prodii_adminpanel() {
+		global $prodii_shortcode_page;
+		global $prodiiAdmin;
+		if (!isset($prodiiAdmin)) {
+			return;
+		}
+
+		add_utility_page( 'Prodii', 'Prodii', 'administrator', 'prodii', array(&$prodiiAdmin, 'printAdminDescriptionPage'), plugins_url('img/menu-logo.png' , __FILE__ ));
+		add_submenu_page( 'prodii', 'Description', 'Description', 'administrator', 'prodii-description', array(&$prodiiAdmin, 'prodii_description_page'));
+		add_submenu_page( 'prodii', 'Key', 'Key', 'administrator', 'prodii-key', array(&$prodiiAdmin, 'prodii_key_page'));
+		$prodii_shortcode_page = add_submenu_page( 'prodii', 'Shortcode', 'Shortcode', 'administrator', 'prodii-shortcode', array(&$prodiiAdmin, 'prodii_shortcode_page'));
+		remove_submenu_page('prodii', 'prodii');
+	}	
+}
+ 
+//Actions and Filters	
+if (isset($prodiiAdmin)) {
+	//Actions
+	add_action('admin_menu', 'prodii_adminpanel');
+	add_action('admin_init', 'update_prodii_key');
+	add_action('admin_enqueue_scripts', array(&$prodiiAdmin, 'addAdminHeaderCode'), 1);
+	add_action('wp_ajax_prodii_shortcode_content', array(&$prodiiAdmin, 'ajax_prodii_shortcode_content'), 1);
+	//Filters
+}
+
 
 ?>
