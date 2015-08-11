@@ -389,21 +389,25 @@ if (!class_exists("ProdiiAdmin")) {
 									</td>
 								</tr>
 								<tr valign="top">
-									<th scope="row">3. Copy/paste your Short Code into a Wordpress Full Width Page</th>
+									<th scope="row">3. Activate your key</th>
 									<td valign="top">
-										<p>Your short code includes your personal key, defines the layers of the About Us pages, selects the teams and people to showcase and includes the design of your choice.</p>
+										<p>Pay to activate your key on prodii.com.</p>
+										<p>Then enter your key within Wordpress.</p>
 									</td>
 								</tr>
 								<tr valign="top">
-									<th scope="row">4. Activate and Enter your Key</th>
+									<th scope="row">4. Create your short code</th>
 									<td>
-										<p>Pay to activate your key and then enter your key into the tab "Key" within Wordpress.</p>
+										<p>Within wordpress you can now generate your short code.</p>
+										<p>Select template (prepaid on prodii.com)</p>
+										<p>Select company/ team(s)</p>
+										<p>Generate your short code and paste into a full width page on your Wordpress home page.</p>
 									</td>
 								</tr>
 								<tr valign="top">
-									<th scope="row">5. Shortcode</th>
+									<th scope="row">5. Updating your company career page</th>
 									<td>
-										<p>Coming up soon.</p>
+										<p>Update your company, team and profile content on prodii.com and your home page will be updated accordingly.</p>
 									</td>
 								</tr>
 							</table>
