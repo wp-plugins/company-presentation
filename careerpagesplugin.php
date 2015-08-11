@@ -332,7 +332,7 @@ if (!class_exists("ProdiiAdmin")) {
 		function addAdminHeaderCode($hook) {
 			global $prodii_shortcode_page;
 			
-			if ($hook != $prodii_shortcode_page) return;
+			//if ($hook != $prodii_shortcode_page) return;
 			
 			wp_enqueue_style('careerpages_admin_prettify_style', 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css');
 			
@@ -372,7 +372,7 @@ if (!class_exists("ProdiiAdmin")) {
 									<td>
 										<ol>
 											<li>Install and activate the plugin</li>
-											<li>Go to https://prodii.com and register for an account</li>
+											<li>Go to <a href="https://prodii.com" target="_blank">https://prodii.com</a> and register for an account</li>
 											<li>Create your company, your team(s) and invite your co-workers</li>
 										</ol>
 									</td>
@@ -383,7 +383,7 @@ if (!class_exists("ProdiiAdmin")) {
 										<p>You enter information about your company and team. Co-workers enter information about themselves.</p>
 										<p>Prodii puts all the content and data together for you in a short code like this:</p>
 										<br>
-										<p>[careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="helios"]</p>
+										<p><span class="pun">[</span><span class="pln">careerpages key</span><span class="pun">=</span><span class="str">"WjEK4UWFcApDLsFR"</span><span class="pln"> level</span><span class="pun">=</span><span class="str">"Teams"</span><span class="pln"> ids</span><span class="pun">=</span><span class="str">"56,68"</span><span class="pln"> </span><span class="kwd">template</span><span class="pun">=</span><span class="str">"helios"</span><span class="pun">]</span></p>
 										<br>
 										<p>(Please go ahead and copy/paste this sample short code into a full width page to see how it works)</p>
 									</td>
@@ -397,7 +397,13 @@ if (!class_exists("ProdiiAdmin")) {
 								<tr valign="top">
 									<th scope="row">4. Activate and Enter your Key</th>
 									<td>
-										<p>?Pay to activate your key and then enter your key into the tab "Key" within Wordpress.</p>
+										<p>Pay to activate your key and then enter your key into the tab "Key" within Wordpress.</p>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">5. Shortcode</th>
+									<td>
+										<p>Coming up soon.</p>
 									</td>
 								</tr>
 							</table>
@@ -531,7 +537,7 @@ if (!function_exists("prodii_adminpanel")) {
 			return;
 		}
 
-		add_utility_page( 'Prodii', 'Prodii', 'administrator', 'prodii', array(&$prodiiAdmin, 'printAdminDescriptionPage'), plugins_url('img/menu-logo.png' , __FILE__ ));
+		add_menu_page( 'Prodii', 'Prodii', 'administrator', 'prodii', array(&$prodiiAdmin, 'printAdminDescriptionPage'), plugins_url('img/menu-logo.png' , __FILE__ ), 21);
 		add_submenu_page( 'prodii', 'Description', 'Description', 'administrator', 'prodii-description', array(&$prodiiAdmin, 'prodii_description_page'));
 		add_submenu_page( 'prodii', 'Key', 'Key', 'administrator', 'prodii-key', array(&$prodiiAdmin, 'prodii_key_page'));
 		$prodii_shortcode_page = add_submenu_page( 'prodii', 'Shortcode', 'Shortcode', 'administrator', 'prodii-shortcode', array(&$prodiiAdmin, 'prodii_shortcode_page'));
