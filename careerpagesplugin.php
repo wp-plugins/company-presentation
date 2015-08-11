@@ -348,11 +348,59 @@ if (!class_exists("ProdiiAdmin")) {
 			echo 	'
 						<div class="wrap">
 							<h2>Prodii Description</h2>
-							<p>Prodii displays content of your choice such as photo, bio, contact information, skills of your employees, team and company where each employee can have their own page.</p>
-							<p>Tell about your people and skills on your intranet and home page. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.</p>
-							<p>With Prodii you can create a professional profile section for your company, team and people; a vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation.</p>
-							<p>Prodii Company and career page Plugin is a cloud-based plugin you can publish on a web page. Create a Prodii account to access the team invitation module and design templates (pro version).</p>
-						</div>
+							<table class="form-table">
+								<tr valign="top">
+									<th scope="row">About Us Pages Made Easy</th>
+									<td>
+										<p>With Prodii Company and career page Plugin you can create a professional "About Us" section for your company, team and people; a vibrant and professional "About Us Page" introducing the human face of your company, such as team profiles and individual profiles.</p>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">On Your Company Home page</th>
+									<td>
+										<p>Tell about your people and skills. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.</p>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">HOW IT WORKS</h3></th>
+									<td>
+										<p>&nbsp;</p>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">1. Get an account on prodii.com</th>
+									<td>
+										<ol>
+											<li>Install and activate the plugin</li>
+											<li>Go to https://prodii.com and register for an account</li>
+											<li>Create your company, your team(s) and invite your co-workers</li>
+										</ol>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">2. Prodii Puts it all together for you in a short code</th>
+									<td>
+										<p>You enter information about your company and team. Co-workers enter information about themselves.</p>
+										<p>Prodii puts all the content and data together for you in a short code like this:</p>
+										<br>
+										<p>[careerpages key="WjEK4UWFcApDLsFR" level="Teams" ids="56,68" template="helios"]</p>
+										<br>
+										<p>(Please go ahead and copy/paste this sample short code into a full width page to see how it works)</p>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">3. Copy/paste your Short Code into a Wordpress Full Width Page</th>
+									<td valign="top">
+										<p>Your short code includes your personal key, defines the layers of the About Us pages, selects the teams and people to showcase and includes the design of your choice.</p>
+									</td>
+								</tr>
+								<tr valign="top">
+									<th scope="row">4. Activate and Enter your Key</th>
+									<td>
+										<p>?Pay to activate your key and then enter your key into the tab "Key" within Wordpress.</p>
+									</td>
+								</tr>
+							</table>
 						';
 		}
 
