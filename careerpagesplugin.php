@@ -7,7 +7,7 @@
 Plugin Name: Careerpages, 
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present your company.
-Version: 4.0.0
+Version: 4.0.1
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/ralphrezendelarsen
 License:
@@ -364,7 +364,7 @@ if (!class_exists("ProdiiAdmin")) {
 			);
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'https://test.prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
+			curl_setopt($ch, CURLOPT_URL, 'https://prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
 			curl_setopt($ch, CURLOPT_POST, count($cp_data));
 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -437,7 +437,7 @@ if (!class_exists("ProdiiAdmin")) {
 			);
 			//$content = $content."From prodii_shortcode_content <pre>".print_r($cp_data, true)."</pre>";
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'https://test.prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
+			curl_setopt($ch, CURLOPT_URL, 'https://prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
 			curl_setopt($ch, CURLOPT_POST, count($cp_data));
 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
