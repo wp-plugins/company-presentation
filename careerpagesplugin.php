@@ -334,9 +334,11 @@ if (!class_exists("ProdiiAdmin")) {
 			
 			//if ($hook != $prodii_shortcode_page) return;
 			
-			wp_enqueue_style('careerpages_admin_prettify_style', 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css');
+			wp_register_style('careerpages_admin_prettify_style', 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css');
+			wp_enqueue_style('careerpages_admin_prettify_style');
 			
-			wp_enqueue_script('careerpages_admin_script', plugins_url('js/careerpagesadmin.js' , __FILE__ ), array('jquery'));
+			wp_register_script('careerpages_admin_script', plugins_url('js/careerpagesadmin.js' , __FILE__ ), array('jquery'));
+			wp_enqueue_script('careerpages_admin_script');
 			wp_localize_script('careerpages_admin_script', 'prodii_vars', array(
 				'prodii_nonce' => wp_create_nonce('prodii_nonce')
 			));
