@@ -2,7 +2,7 @@
 Contributors: Ralph Rezende
 Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, careerpage, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
 Requires at least: 4.0
-Tested up to: 4.2.2
+Tested up to: 4.2.4
 Stable tag: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -133,6 +133,9 @@ You can sign up on prodii for free and invite team members and build your compan
 15. You are in control of the content on your home page. Your employees (team members) are in charge of their profile and content. Together you pick "the best of all of you". Choose a template or have one customised. All templates, our free templates included, are responsive.
 
 == Changelog ==
+= 4.0.2 =
+* Problem resolved - Code generator Company error.
+
 = 4.0.1 =
 * Problem resolved - Ajax problem resolved.
 
