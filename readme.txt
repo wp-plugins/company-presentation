@@ -2,8 +2,8 @@
 Contributors: Ralph Rezende
 Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, careerpage, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
 Requires at least: 4.0
-Tested up to: 4.2.4
-Stable tag: 4.3.0
+Tested up to: 4.3.0
+Stable tag: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
