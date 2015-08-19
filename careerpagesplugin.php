@@ -327,6 +327,30 @@ if (!class_exists("ProdiiAdmin")) {
 	class ProdiiAdmin {
 
 		function ProdiiAdmin() { //constructor
+			//require_once(self::$templateini["pluginpath"].'/php/careerpagespluginlibrary.php');
+			//require_once(plugins_url('php/careerpagespluginlibrary.php' , __FILE__ ));
+			include(plugin_dir_path(__FILE__).'php/careerpagespluginlibrary.php');
+		}
+
+		function set_admin_statistics($page) {
+			//Set server data
+			$cp_data = array(
+				'action' => 'setLogistics',
+				'key' => get_option("prodii_key"),
+				'method' => 'wppluginadmin',
+				'page' => $page,
+				'clientip' => CareerpagesLibrary::get_client_ip(),
+				'server' => json_encode($_SERVER)
+			);
+
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
+			curl_setopt($ch, CURLOPT_POST, count($cp_data));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($cp_data));
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+			curl_exec($ch);
+			curl_close($ch);
 		}
 
 		function addAdminHeaderCode($hook) {
@@ -347,6 +371,8 @@ if (!class_exists("ProdiiAdmin")) {
 
 		//Prints out the admin Prodii description page
 		function prodii_description_page() {
+			self::set_admin_statistics('description');
+
 			echo 	'
 						<div class="wrap">
 							<h2>Prodii Description</h2>
@@ -416,8 +442,10 @@ if (!class_exists("ProdiiAdmin")) {
 						';
 		}
 
-		//Prints out the admin key page
-		function prodii_key_page() {
+		//Prints out the admin settings page
+		function prodii_settings_page() {
+			self::set_admin_statistics('settings');
+
 			$cp_data = array(
 				'action' => 'getKeyData',
 				'key' => get_option("prodii_key")
@@ -434,7 +462,7 @@ if (!class_exists("ProdiiAdmin")) {
 			
 			echo 	'
 						<div class="wrap">
-							<h2>Prodii Plugin Key</h2>
+							<h2>Prodii Settings</h2>
 						';
 			if (isset($data["teamowner"])) {
 				echo 	'
@@ -451,8 +479,8 @@ if (!class_exists("ProdiiAdmin")) {
 			echo 	'
 							<form method="post" action="options.php">
 						';	
-							settings_fields("prodii-key-settings");
-							do_settings_sections("prodii-key-settings");
+							settings_fields("prodii-settings");
+							do_settings_sections("prodii-settings");
 			echo 	'
 								<table class="form-table">
 									<tr valign="top">
@@ -471,6 +499,8 @@ if (!class_exists("ProdiiAdmin")) {
 		//Prints out the admin shortcode page
 		//function prodii_shortcode_page($hook) {
 		function prodii_shortcode_page() {
+			self::set_admin_statistics('shortcode');
+
 			echo 	'
 						<div class="wrap">
 							<h2>Prodii Plugin Shortcode</h2>
@@ -528,9 +558,9 @@ if (class_exists("ProdiiAdmin")) {
 	$prodiiAdmin = new ProdiiAdmin();
 }
 		
-if (!function_exists("update_prodii_key")) {
-	function update_prodii_key() {
-		register_setting('prodii-key-settings', 'prodii_key');
+if (!function_exists("update_prodii_settings")) {
+	function update_prodii_settings() {
+		register_setting('prodii-settings', 'prodii_key');
 	}
 }
 
@@ -545,7 +575,7 @@ if (!function_exists("prodii_adminpanel")) {
 
 		add_menu_page( 'Prodii', 'Prodii', 'administrator', 'prodii', array(&$prodiiAdmin, 'printAdminDescriptionPage'), plugins_url('img/menu-logo.png' , __FILE__ ), 21);
 		add_submenu_page( 'prodii', 'Description', 'Description', 'administrator', 'prodii-description', array(&$prodiiAdmin, 'prodii_description_page'));
-		add_submenu_page( 'prodii', 'Key', 'Key', 'administrator', 'prodii-key', array(&$prodiiAdmin, 'prodii_key_page'));
+		add_submenu_page( 'prodii', 'Settings', 'Settings', 'administrator', 'prodii-settings', array(&$prodiiAdmin, 'prodii_settings_page'));
 		$prodii_shortcode_page = add_submenu_page( 'prodii', 'Shortcode', 'Shortcode', 'administrator', 'prodii-shortcode', array(&$prodiiAdmin, 'prodii_shortcode_page'));
 		remove_submenu_page('prodii', 'prodii');
 	}	
@@ -555,7 +585,7 @@ if (!function_exists("prodii_adminpanel")) {
 if (isset($prodiiAdmin)) {
 	//Actions
 	add_action('admin_menu', 'prodii_adminpanel');
-	add_action('admin_init', 'update_prodii_key');
+	add_action('admin_init', 'update_prodii_settings');
 	add_action('admin_enqueue_scripts', array(&$prodiiAdmin, 'addAdminHeaderCode'), 1);
 	add_action('wp_ajax_prodii_shortcode_content', array(&$prodiiAdmin, 'ajax_prodii_shortcode_content'), 1);
 	//Filters
