@@ -20,7 +20,8 @@ No coders required.
 With Prodii you can create a professional profile section for your company, team and people;
 A vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation. 
 
-Prodii Company and career page Plugin is a cloud-based plugin you can publish on a web page. Create a Prodii account to access the team invitation module and design templates (pro version).
+Prodii Company and career page Plugin is a cloud-based plugin you can publish on a web page.
+Create a Prodii account to access the team invitation module and design templates (pro version).
 
 = This is how it works =
 1. Install Wordpress plugin 
