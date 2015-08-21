@@ -12,8 +12,13 @@ A professional profile section with an 'About Us' Page with visual Company, Team
 == Description ==
 Prodii displays content of your choice such as photo, bio, contact information, skills of your employees, team and company where each employee can have their own page.
 
-Tell about your people and skills on your intranet and home page. Include employee profiles and showcase your organisation on your company home page. From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design. No coders required.
-With Prodii you can create a professional profile section for your company, team and people; a vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation. 
+Tell about your people and skills on your intranet and home page.
+Include employee profiles and showcase your organisation on your company home page.
+From a simple employee directory listing of your employees and/ or co-workers to an extended profile information with photos, skills and bio - all put together in a stylish design.
+No coders required.
+
+With Prodii you can create a professional profile section for your company, team and people;
+A vibrant and professional "About Us Page" not only for your general company introduction, but also for team profiles and individual profiles (people, positions, skills) within your organisation. 
 
 Prodii Company and career page Plugin is a cloud-based plugin you can publish on a web page. Create a Prodii account to access the team invitation module and design templates (pro version).
 
