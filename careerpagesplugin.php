@@ -152,8 +152,8 @@ if (!class_exists("CareerpagesMain")) {
 			}
 		}
 		
-		function conditionally_add_scripts_and_styles($posts){
-			if ( $wp_query->is_main_query() ) {
+		function conditionally_add_scripts_and_styles($posts, $wp_query){
+			if ($wp_query->is_main_query()) {
 				self::$templateini = array();
 				self::$templateini["errors"] = array();
 
@@ -317,7 +317,7 @@ if (class_exists("CareerpagesMain")) {
 
 if (isset($careerpagesMain)) {
 	// the_posts gets triggered before wp_head
-	add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 1);
+	add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 10, 2);
 	add_action('wp_enqueue_scripts', array(&$careerpagesMain, 'addHeaderCode'), 111115);
 	add_shortcode('careerpages', array('careerpagesMain', 'careerpages_shortcut'));
 }
