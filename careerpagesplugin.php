@@ -7,7 +7,7 @@
 Plugin Name: Careerpages, 
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present your company.
-Version: 4.0.2
+Version: 4.0.3
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/ralphrezendelarsen
 License:
@@ -153,93 +153,97 @@ if (!class_exists("CareerpagesMain")) {
 		}
 		
 		function conditionally_add_scripts_and_styles($posts){
-			self::$templateini = array();
-			self::$templateini["errors"] = array();
+			if ( $wp_query->is_main_query() ) {
+				self::$templateini = array();
+				self::$templateini["errors"] = array();
 
-			$error = array();
-			
-			if (empty($posts)) return $posts;
+				$error = array();
+				
+				if (empty($posts)) return $posts;
 
-			$shortcode_found = false;
-			foreach ($posts as $post) {
-				if (stripos($post->post_content, '[careerpages ') !== false) {
-					if ($post->post_type == 'page') {
-						$shortcode_found = true;
-						break;
+				$shortcode_found = false;
+				$content = '';
+				foreach ($posts as $post) {
+					if (stripos($post->post_content, '[careerpages ') !== false) {
+						if ($post->post_type == 'page') {
+							$shortcode_found = true;
+							$content = $post->post_content;
+							break;
+						} else {
+							$post->post_content = 'Sorry but Career pages only works with pages';
+						}
+					}
+				}
+				
+				if ($shortcode_found) {
+					// Key
+					if (stripos($content, ' key="') !== false) {
+						$startpos = stripos($content, ' key="') + 6;
+						self::$templateini["key"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
 					} else {
-						$post->post_content = 'Sorry but Career pages only works with pages';
+						self::$templateini["errors"][] = 'Key missing or Key is misspelled in shortcode';
 					}
-				}
-			}
-			
-			if ($shortcode_found) {
-				// Key
-				if (stripos($post->post_content, ' key="') !== false) {
-					$startpos = stripos($post->post_content, ' key="') + 6;
-					self::$templateini["key"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-				} else {
-					self::$templateini["errors"][] = 'Key missing or Key is misspelled in shortcode';
-				}
-				
-				// Template
-				if (stripos($post->post_content, ' template="') !== false) {
-					$startpos = stripos($post->post_content, ' template="') + 11;
-					self::$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-					self::$templateini["urlencodedtemplate"] = rawurlencode(substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos));
-				} else {
-					self::$templateini["template"]= 'copenhagen';
-					self::$templateini["urlencodedtemplate"]= 'copenhagen';
-				}
-				
-				// Subdir
-				$subdir = '';
-				if (stripos($post->post_content, ' subdir="') !== false) {
-					$startpos = stripos($post->post_content, ' subdir="') + 9;
-					self::$templateini["subdir"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-				} else {
-					self::$templateini["subdir"] = '';
-				}
-				
-				// Css
-				if (stripos($post->post_content, ' css="') !== false) {
-					$startpos = stripos($post->post_content, ' css="') + 6;
-					self::$templateini["css"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-				} else {
-					self::$templateini["css"] = '';
-				}
-				
-				// Level
-				if (stripos($post->post_content, ' level="') !== false) {
-					$startpos = stripos($post->post_content, ' level="') + 8;
-					self::$templateini["level"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-				} else {
-					self::$templateini["errors"][] = 'Level missing or Level is misspelled in shortcode';
-				}
-				
-				// Ids
-				if (stripos($post->post_content, ' ids="') !== false) {
-					$startpos = stripos($post->post_content, ' ids="') + 6;
-					self::$templateini["ids"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
-				} else {
-					self::$templateini["errors"][] = 'Ids missing or Ids is misspelled in shortcode';
-				}
+					
+					// Template
+					if (stripos($content, ' template="') !== false) {
+						$startpos = stripos($content, ' template="') + 11;
+						self::$templateini["template"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
+						self::$templateini["urlencodedtemplate"] = rawurlencode(substr($content, $startpos, stripos($content, '"', $startpos) - $startpos));
+					} else {
+						self::$templateini["template"]= 'copenhagen';
+						self::$templateini["urlencodedtemplate"]= 'copenhagen';
+					}
+					
+					// Subdir
+					$subdir = '';
+					if (stripos($content, ' subdir="') !== false) {
+						$startpos = stripos($content, ' subdir="') + 9;
+						self::$templateini["subdir"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
+					} else {
+						self::$templateini["subdir"] = '';
+					}
+					
+					// Css
+					if (stripos($content, ' css="') !== false) {
+						$startpos = stripos($content, ' css="') + 6;
+						self::$templateini["css"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
+					} else {
+						self::$templateini["css"] = '';
+					}
+					
+					// Level
+					if (stripos($content, ' level="') !== false) {
+						$startpos = stripos($content, ' level="') + 8;
+						self::$templateini["level"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
+					} else {
+						self::$templateini["errors"][] = 'Level missing or Level is misspelled in shortcode';
+					}
+					
+					// Ids
+					if (stripos($content, ' ids="') !== false) {
+						$startpos = stripos($content, ' ids="') + 6;
+						self::$templateini["ids"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
+					} else {
+						self::$templateini["errors"][] = 'Ids missing or Ids is misspelled in shortcode';
+					}
 
-				CareerpagesMain::getTemplatedata();
-				if (empty(self::$templateini["errors"])) {
-					foreach (self::$templateini["ini"]["styles"] as $name => $url) {
-						wp_register_style($name, self::$templateini["templateurl"].$url);
+					CareerpagesMain::getTemplatedata();
+					if (empty(self::$templateini["errors"])) {
+						foreach (self::$templateini["ini"]["styles"] as $name => $url) {
+							wp_register_style($name, self::$templateini["templateurl"].$url);
+						}
+						foreach (self::$templateini["ini"]["scripts"] as $name => $url) {
+							wp_register_script($name, self::$templateini["templateurl"].$url);
+						}
 					}
-					foreach (self::$templateini["ini"]["scripts"] as $name => $url) {
-						wp_register_script($name, self::$templateini["templateurl"].$url);
-					}
-				}
 
-				// plugin specific files from plugin, IE10 viewport hack for Surface/desktop Windows 8 bug
-				wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ));
-				
-				wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
-				wp_register_script('careerpages_script', plugins_url('js/careerpages.js' , __FILE__ ));
-				wp_register_script('careerpages_library', plugins_url('js/library.js' , __FILE__ ));
+					// plugin specific files from plugin, IE10 viewport hack for Surface/desktop Windows 8 bug
+					wp_register_script('careerpages_viewportbug', plugins_url('js/ie10-viewport-bug-workaround.js' , __FILE__ ));
+					
+					wp_register_script('careerpages_googlemap_places', 'https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places&amp;language=en', false, '3');
+					wp_register_script('careerpages_script', plugins_url('js/careerpages.js' , __FILE__ ));
+					wp_register_script('careerpages_library', plugins_url('js/library.js' , __FILE__ ));
+				}
 			}
 			
 			return $posts;
