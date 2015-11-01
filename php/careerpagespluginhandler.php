@@ -5,13 +5,12 @@ header("content-type: text/html; Charset: utf-8");
 setlocale(LC_ALL, "en_GB");
 
 // Global variables
-$conn = openDBConnection();
 $action = $_POST['action']; 
 $templateini = array();
-$medias = Careerpages::getAllMedias();
-$templateimages = null;
-$skilllevels = Careerpages::getSkilllevels();
-$languagelevels = Careerpages::getLanguagelevels();
+//$medias = Careerpages::getAllMedias();
+//$templateimages = null;
+//$skilllevels = Careerpages::getSkilllevels();
+//$languagelevels = Careerpages::getLanguagelevels();
 
 
 
