@@ -3,7 +3,7 @@ Contributors: Ralph Rezende
 Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, careerpage, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
 Requires at least: 4.0
 Tested up to: 4.3.1
-Stable tag: 4.0.3
+Stable tag: 4.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,6 +139,17 @@ You can sign up on prodii for free and invite team members and build your compan
 15. You are in control of the content on your home page. Your employees (team members) are in charge of their profile and content. Together you pick "the best of all of you". Choose a template or have one customised. All templates, our free templates included, are responsive.
 
 == Changelog ==
+= 4.1.0 =
+* Modification - Change of system logic according to shortcodes and embedcodes. Therefore the shortcode and embedcode parameter level Teams has changed to Company.
+So updating now means you have to change level parameter for the company view. Now we also need the companyid before the teamids.
+Now it is possible to show a company without teams.
+We made vanity system to show companies, teams and profiles with a pre selected template.
+Just write eg.:
+https://prodii.com/prodii/team1 - and you will see your Team 1 with one template
+and
+https://prodii.com/prodii - and you will see your company with another template
+There are much more combinations, go there and explore Prodii.com 
+
 = 4.0.3 =
 * Problem resolved - Related posts error for users with several shortcodes and related posts.
 
@@ -155,7 +166,7 @@ You can sign up on prodii for free and invite team members and build your compan
 * Modification - In order to track statistics on your plugins, we are collecting data about client ip, location, language, browser, platform, display level, display ids and template used. These data can be viewed on prodii.com or retrieved using our API. 
 
 = 3.0.2 =
-* Modification - Now teams is shown in the same order as in shortcode or embedcode, instead of alphabetic name order, which means you can now control the team order.
+* Modification - Now teams is shown in the same order as in shortcode or embedcode, instead of name alphabetic, which means you can control the team order.
 
 = 3.0.1 =
 * Problem resolved - Plugin installed on WordPress site located in subdomain error.

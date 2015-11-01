@@ -255,6 +255,20 @@ class CareerpagesLibrary {
 		return self::getSiteUrl().'/common/uploadimages/'.$filename;
 	}*/
 
+	public static function getImageurl($filename) {
+		global $templateini;
+
+		if ($filename) {
+			if($templateini["local"]) {
+				$url = $templateini["templateurl"].'images/'.$filename;
+			} else {
+				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$filename;
+			}
+		}
+		
+		return $url;
+	}
+
 	public static function getProfileimageurl($templateimages, $imageurl, $mediaid) {
 		global $templateini;
 

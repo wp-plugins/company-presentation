@@ -1,7 +1,6 @@
 <?php
 class CareerpagesLibrary {
 
-
 	public static function testEmail($email) {
 		$output = true; 
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -115,11 +114,13 @@ class CareerpagesLibrary {
 			$diffMonths = $diffDate->format("%m");
 			$diffDays = $diffDate->format("%d");
 			$diff["year"] = $diffYears.($diffYears > 1 ? " years" : " year");
+			$diff["intyear"] = $diffYears;
 			$diff["yearmonth"] = ($diffYears == "0" ? "" : ($diffYears == "1" ? $diffYears." year " : $diffYears." years ")).$diffMonths.($diffMonths == 1 ? " month" : " months");
 			$diff["yearmonthshort"] = ($diffYears == "0" ? "" : ($diffYears == "1" ? $diffYears." yrs " : $diffYears." yrs ")).$diffMonths.($diffMonths == 1 ? " mth" : " mth");
 			$diff["yearmonthday"] = ($diffYears == "0" ? "" : ($diffYears == "1" ? $diffYears." year " : $diffYears." years ")).($diffMonths == "0" ? "" : ($diffMonths == "1" ? $diffMonths." month " : $diffMonths." months ")).($diffDays == "0" ? "0 days" : ($diffDays == "1" ? $diffDays." day " : $diffDays." days"));
 		} else {
 			$diff["year"] = "";
+			$diff["intyear"] = null;
 			$diff["yearmonth"] = "";
 			$diff["yearmonthday"] = "";
 		}
@@ -255,6 +256,20 @@ class CareerpagesLibrary {
 		return self::getSiteUrl().'/common/uploadimages/'.$filename;
 	}*/
 
+	public static function getImageurl($filename) {
+		global $templateini;
+
+		if ($filename) {
+			if($templateini["local"]) {
+				$url = $templateini["templateurl"].'images/'.$filename;
+			} else {
+				$url = Library::getSiteUrl().'/common/careerpages/templates/'.$templateini["template"].'/images/'.$filename;
+			}
+		}
+		
+		return $url;
+	}
+	
 	public static function getProfileimageurl($templateimages, $imageurl, $mediaid) {
 		global $templateini;
 
@@ -262,13 +277,15 @@ class CareerpagesLibrary {
 			if($mediaid) {
 				$url = $imageurl;
 			} else {
-				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$imageurl;
+				//$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$imageurl;
+				$url = Library::getSiteUrl().'/common/uploadimages/'.$imageurl;
 			}
 		} else {
 			if($templateini["local"]) {
 				$url = $templateini["templateurl"].'images/'.$templateimages["profile_image_placeholder"];
 			} else {
-				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
+				//$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
+				$url = Library::getSiteUrl().'/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["profile_image_placeholder"];
 			}
 		}
 		
@@ -279,12 +296,14 @@ class CareerpagesLibrary {
 		global $templateini;
 		
 		if ($filename) {
-			$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
+			//$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
+			$url = Library::getSiteUrl().'/common/uploadimages/'.$filename;
 		} else {
 			if($templateini["local"]) {
 				$url = $templateini["templateurl"].'images/'.$templateimages["team_image_placeholder"];
 			} else {
-				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
+				//$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
+				$url = Library::getSiteUrl().'/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["team_image_placeholder"];
 			}
 		}
 		
@@ -295,12 +314,14 @@ class CareerpagesLibrary {
 		global $templateini;
 		
 		if ($filename) {
-			$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
+			//$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/uploadimages/'.$filename;
+			$url = Library::getSiteUrl().'/common/uploadimages/'.$filename;
 		} else {
 			if($templateini["local"]) {
 				$url = $templateini["templateurl"].'images/'.$templateimages["company_image_placeholder"];
 			} else {
-				$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
+				//$url = 'https://'.(isset($templateini["subdir"]) && $templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
+				$url = Library::getSiteUrl().'/common/careerpages/templates/'.$templateini["template"].'/images/'.$templateimages["company_image_placeholder"];
 			}
 		}
 		

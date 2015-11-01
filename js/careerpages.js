@@ -9,19 +9,19 @@
 	};
 }( jQuery ));
 
-// getTeamsHtml
-function getTeamsHtml(teams) {
+// getCompanyHtml
+function getCompanyHtml(company) {
 	var group = jQuery("#careerpagescontent").parent();
 	group.find('#loading').show();
 	jQuery.ajax({
 		cache: false,
 		url: group.find('#handler').val(),
-		data: {action: 'getTeamsHtml', key: group.find("#key").val(), subdir: group.find("#subdir").val(), teams: teams, template: group.find("#template").val(), local: group.find("#local").val(), subdir: group.find("#subdir").val(), breadcrumbs: [teams, 0, 0]},
+		data: {action: 'getCompanyHtml', key: group.find("#key").val(), subdir: group.find("#subdir").val(), company: company, template: group.find("#template").val(), local: group.find("#local").val(), subdir: group.find("#subdir").val(), breadcrumbs: [company, 0, 0]},
 		dataType: 'json',
 		type: 'post',
 		success: function(data) {
 			jQuery("#careerpagescontent").html(data);
-			group.find("#teamids").val(teams);
+			group.find("#companyids").val(company);
 			group.find("#teamid").val(0);
 			group.find("#profileid").val(0);
 			window.scrollTo(0, 0);
@@ -38,7 +38,7 @@ function getTeamHtml(team) {
 	jQuery.ajax({
 		cache: false,
 		url: group.find('#handler').val(),
-		data: {action: 'getTeamHtml', key: group.find("#key").val(), subdir: group.find("#subdir").val(), team: team, template: group.find("#template").val(), local: group.find("#local").val(), subdir: group.find("#subdir").val(), breadcrumbs: [group.find("#teamids").val(), team, 0]},
+		data: {action: 'getTeamHtml', key: group.find("#key").val(), subdir: group.find("#subdir").val(), team: team, template: group.find("#template").val(), local: group.find("#local").val(), subdir: group.find("#subdir").val(), breadcrumbs: [group.find("#companyids").val(), team, 0]},
 		dataType: 'json',
 		type: 'post',
 		success: function(data) {
@@ -59,7 +59,7 @@ function getProfileHtml(profile) {
 	jQuery.ajax({
 		cache: false,
 		url: group.find('#handler').val(),
-		data: {action: 'getProfileHtml', key: group.find("#key").val(), subdir: group.find("#subdir").val(), profile: profile, template: group.find("#template").val(), local: group.find("#local").val(), subdir: group.find("#subdir").val(), breadcrumbs: [group.find("#teamids").val(), group.find("#teamid").val(), profile]},
+		data: {action: 'getProfileHtml', key: group.find("#key").val(), subdir: group.find("#subdir").val(), profile: profile, template: group.find("#template").val(), local: group.find("#local").val(), subdir: group.find("#subdir").val(), breadcrumbs: [group.find("#companyids").val(), group.find("#teamid").val(), profile]},
 		dataType: 'json',
 		type: 'post',
 		success: function(data) {

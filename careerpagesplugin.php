@@ -7,7 +7,7 @@
 Plugin Name: Careerpages, 
 Plugin URI: https://prodii.com/WpPluginInfo
 Description: The ultimative easiest way to present your company.
-Version: 4.0.3
+Version: 4.1.0
 Author: Prodii by Ralph Rezende Larsen
 Author URI: https://prodii.com/view/ralphrezendelarsen
 License:
@@ -32,7 +32,7 @@ if (!class_exists("CareerpagesMain")) {
 		
 		function getTemplatedata() {
 			if (empty(self::$templateini["errors"])) {
-				self::$templateini["templatedata"]["php"] = CareerpagesMain::webItemExists(plugins_url('templates/'.self::$templateini["template"].'/php/careerpagestemplategui.php' , __FILE__ ), array());
+				self::$templateini["templatedata"]["php"] = CareerpagesMain::webItemExists(plugins_url('templates/'.self::$templateini["template"].'/php/careerpagestemplate.php' , __FILE__ ), array());
 				//self::$templateini["templatedata"]["js"] = CareerpagesMain::webItemExists(plugins_url('templates/'.self::$templateini["template"].'/js/careerpagestemplate.js' , __FILE__ ), array());
 				//self::$templateini["templatedata"]["css"] = CareerpagesMain::webItemExists(self::$templateini["css"] ? self::$templateini["css"] : plugins_url('templates/'.self::$templateini["template"].'/css/careerpagestemplatedefault.css' , __FILE__ ), array());
 				self::$templateini["pluginurl"] = plugins_url('', __FILE__).'/';
@@ -43,7 +43,7 @@ if (!class_exists("CareerpagesMain")) {
 					self::$templateini["templateurl"] = plugins_url('templates/'.self::$templateini["urlencodedtemplate"].'/' , __FILE__ );
 					self::$templateini["templatepath"] = plugin_dir_path(__FILE__).'templates/'.self::$templateini["template"].'/';
 				} else {
-					$file_headers = @get_headers('https://'.(self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '') .'prodii.com/common/careerpages/templates/'.self::$templateini["template"].'/php/careerpagestemplategui.php');
+					$file_headers = @get_headers('https://'.(self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '') .'prodii.com/common/careerpages/templates/'.self::$templateini["template"].'/php/careerpagestemplate.php');
 					self::$templateini["remote"]["status"] = strrpos($file_headers[0], ' 404 Not Found') === false;
 					if (self::$templateini["remote"]["status"]) {
 						self::$templateini["local"] = 0;
@@ -60,8 +60,8 @@ if (!class_exists("CareerpagesMain")) {
 				
 				// Get template ini
 				if (self::$templateini["local"]) {
-					require_once(self::$templateini["templatepath"].'php/careerpagestemplategui.php');
-					self::$templateini["ini"] = CareerpagesTemplateGui::getIni();
+					require_once(self::$templateini["templatepath"].'php/careerpagestemplate.php');
+					self::$templateini["ini"] = CareerpagesTemplate::getIni();
 				} else {
 					$cp_info = array(
 						'action' => 'getIni',
@@ -95,6 +95,7 @@ if (!class_exists("CareerpagesMain")) {
 					'subdir' => self::$templateini["subdir"],
 					'css' => isset($css) && $css ? $css : ''
 				);
+
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, 'https://'.(isset(self::$templateini["subdir"]) && self::$templateini["subdir"] ? self::$templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageshandler.php'); 
 				curl_setopt($ch, CURLOPT_POST, count($cp_data));
@@ -107,6 +108,7 @@ if (!class_exists("CareerpagesMain")) {
 				} elseif ($response == '') {
 					self::$templateini["errors"][] = 'No '.(self::$templateini["local"] ? 'data' : 'html').' returned from cURL';
 				}
+
 				curl_close($ch);
 			}
 
@@ -136,14 +138,14 @@ if (!class_exists("CareerpagesMain")) {
 			if (empty(self::$templateini["errors"])) {
 				if (self::$templateini["local"]) {
 					switch (self::$templateini["level"]) {
-						case "Teams":
-							self::$templateini["gui"] = CareerpagesTemplateGui::getTeamsGui($response);
+						case "Company":
+							self::$templateini["gui"] = CareerpagesTemplate::getCompany($response);
 							break;
 						case "Team":
-							self::$templateini["gui"] = CareerpagesTemplateGui::getTeamGui($response);
+							self::$templateini["gui"] = CareerpagesTemplate::getTeam($response);
 							break;
 						case "Profile":
-							self::$templateini["gui"] = CareerpagesTemplateGui::getProfileGui($response);
+							self::$templateini["gui"] = CareerpagesTemplate::getProfile($response);
 							break;
 					}						
 				} else {
@@ -177,6 +179,9 @@ if (!class_exists("CareerpagesMain")) {
 				
 				if ($shortcode_found) {
 					// Key
+					//if (stripos($post->post_content, ' key="') !== false) {
+					//	$startpos = stripos($post->post_content, ' key="') + 6;
+					//	self::$templateini["key"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					if (stripos($content, ' key="') !== false) {
 						$startpos = stripos($content, ' key="') + 6;
 						self::$templateini["key"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
@@ -185,6 +190,10 @@ if (!class_exists("CareerpagesMain")) {
 					}
 					
 					// Template
+					//if (stripos($post->post_content, ' template="') !== false) {
+					//	$startpos = stripos($post->post_content, ' template="') + 11;
+					//	self::$templateini["template"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
+					//	self::$templateini["urlencodedtemplate"] = rawurlencode(substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos));
 					if (stripos($content, ' template="') !== false) {
 						$startpos = stripos($content, ' template="') + 11;
 						self::$templateini["template"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
@@ -196,6 +205,9 @@ if (!class_exists("CareerpagesMain")) {
 					
 					// Subdir
 					$subdir = '';
+					//if (stripos($post->post_content, ' subdir="') !== false) {
+					//	$startpos = stripos($post->post_content, ' subdir="') + 9;
+					//	self::$templateini["subdir"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					if (stripos($content, ' subdir="') !== false) {
 						$startpos = stripos($content, ' subdir="') + 9;
 						self::$templateini["subdir"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
@@ -204,6 +216,9 @@ if (!class_exists("CareerpagesMain")) {
 					}
 					
 					// Css
+					//if (stripos($post->post_content, ' css="') !== false) {
+					//	$startpos = stripos($post->post_content, ' css="') + 6;
+					//	self::$templateini["css"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					if (stripos($content, ' css="') !== false) {
 						$startpos = stripos($content, ' css="') + 6;
 						self::$templateini["css"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
@@ -212,6 +227,9 @@ if (!class_exists("CareerpagesMain")) {
 					}
 					
 					// Level
+					//if (stripos($post->post_content, ' level="') !== false) {
+					//	$startpos = stripos($post->post_content, ' level="') + 8;
+					//	self::$templateini["level"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					if (stripos($content, ' level="') !== false) {
 						$startpos = stripos($content, ' level="') + 8;
 						self::$templateini["level"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
@@ -220,6 +238,9 @@ if (!class_exists("CareerpagesMain")) {
 					}
 					
 					// Ids
+					//if (stripos($post->post_content, ' ids="') !== false) {
+					//	$startpos = stripos($post->post_content, ' ids="') + 6;
+					//	self::$templateini["ids"] = substr($post->post_content, $startpos, stripos($post->post_content, '"', $startpos) - $startpos);
 					if (stripos($content, ' ids="') !== false) {
 						$startpos = stripos($content, ' ids="') + 6;
 						self::$templateini["ids"] = substr($content, $startpos, stripos($content, '"', $startpos) - $startpos);
@@ -285,25 +306,47 @@ if (!class_exists("CareerpagesMain")) {
 		}
 		
 		static function careerpages_shortcut($atts) {
-			if (empty(self::$templateini["errors"])) {
+			$errorHeader = '<h2>Sorry for the inconvenience</h2><br>';
+
+			if (isset(self::$templateini["gui"]) && is_array(self::$templateini["gui"]) && isset(self::$templateini["gui"]["error"])) {
+				switch (self::$templateini["gui"]["error"]) {
+					case 'There is no handler for getTeamsHtml':
+						$content = 	'
+												<h3>New Prodii release</h3>
+												You have updated <b>Company, Team and People presentation</b> recently and need to change the shortcode level parameter.<br>
+												Change the parameter from level="Teams" to level="Company", in order use Prodii\'s latest version of <b>Company, Team and People presentation</b> tool.
+												<br><br>
+												<b>NB:</b> Don\'t forget to add company id before the the team id\'s in the shortcode ids parameter.
+												<br><br>
+												Go to <a href="'.admin_url().'admin.php?page=prodii-shortcode" target="_blank">wp-admin - Prodii - Shortcodes</a>, generate your shortcode, and paste it on the page.
+												';
+						break;
+					default:
+						$content = 	'
+												Following error vas detected:<br><br>
+												self::$templateini["gui"]["error"]
+												';
+				}			
+				$content = $errorHeader.$content;
+			} elseif (!empty(self::$templateini["errors"])) {
+				$errors = '';
+				foreach (self::$templateini["errors"] as $index => $error) {
+					$errors .= ($index + 1).')&nbsp;'.$error.'<br>';
+				}
+				$content = $errorHeader.$errors;
+			} else {
 				$content = 	'
 										<input id="handler" type="hidden" value="'.plugins_url('php/careerpagespluginhandler.php' , __FILE__ ).'"/>
 										<input id="local" type="hidden" value="'.(isset(self::$templateini["local"]) ? self::$templateini["local"] : "").'"/>
 										<input id="subdir" type="hidden" value="'.(isset($atts["subdir"]) && $atts["subdir"] ? $atts["subdir"] : "").'"/>
 										<input id="template" type="hidden" value="'.$atts["template"].'"/>
 										<input id="key" type="hidden" value="'.$atts["key"].'"/>
-										<input id="teamids" type="hidden" value="'.($atts["level"] == "Teams" ? $atts["ids"] : "0").'"/>
+										<input id="companyids" type="hidden" value="'.($atts["level"] == "Company" ? $atts["ids"] : "0").'"/>
 										<input id="teamid" type="hidden" value="'.($atts["level"] == "Team" ? $atts["ids"] : "0").'"/>
 										<input id="profileid" type="hidden" value="'.($atts["level"] == "Profile" ? $atts["ids"] : "0").'"/>
 										'.(isset($atts["css"]) && $atts["css"] ? '<input id="css" type="hidden" value="'.$atts["css"].'"/>' : '<input id="css" type="hidden" value="careerpagestemplatedefault.css"/>').'
-										<div id="careerpagescontent" class="prd-container">'.(isset(self::$templateini["gui"]) ? self::$templateini["gui"] : '').'</div>
+										<div id="careerpagescontent" class="prd-container prd-body">'.(isset(self::$templateini["gui"]) ? self::$templateini["gui"] : '').'</div>
 										';
-			} else {
-				$errors = '';
-				foreach (self::$templateini["errors"] as $index => $error) {
-					$errors .= ($index + 1).')&nbsp;'.$error.'<br>';
-				}
-				$content = $errors;
 			}
 			
 			return $content;
@@ -317,6 +360,7 @@ if (class_exists("CareerpagesMain")) {
 
 if (isset($careerpagesMain)) {
 	// the_posts gets triggered before wp_head
+	//add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 1);
 	add_filter('the_posts', array(&$careerpagesMain, 'conditionally_add_scripts_and_styles'), 10, 2);
 	add_action('wp_enqueue_scripts', array(&$careerpagesMain, 'addHeaderCode'), 111115);
 	add_shortcode('careerpages', array('careerpagesMain', 'careerpages_shortcut'));
@@ -415,7 +459,7 @@ if (!class_exists("ProdiiAdmin")) {
 										<p>You enter information about your company and team. Co-workers enter information about themselves.</p>
 										<p>Prodii puts all the content and data together for you in a short code like this:</p>
 										<br>
-										<p><span class="pun">[</span><span class="pln">careerpages key</span><span class="pun">=</span><span class="str">"WjEK4UWFcApDLsFR"</span><span class="pln"> level</span><span class="pun">=</span><span class="str">"Teams"</span><span class="pln"> ids</span><span class="pun">=</span><span class="str">"56,68"</span><span class="pln"> </span><span class="kwd">template</span><span class="pun">=</span><span class="str">"helios"</span><span class="pun">]</span></p>
+										<p><span class="pun">[</span><span class="pln">careerpages key</span><span class="pun">=</span><span class="str">"WjEK4UWFcApDLsFR"</span><span class="pln"> level</span><span class="pun">=</span><span class="str">"Company"</span><span class="pln"> ids</span><span class="pun">=</span><span class="str">"101,56,68"</span><span class="pln"> </span><span class="kwd">template</span><span class="pun">=</span><span class="str">"helios"</span><span class="pun">]</span></p>
 										<br>
 										<p>(Please go ahead and copy/paste this sample short code into a full width page to see how it works)</p>
 									</td>
@@ -529,7 +573,7 @@ if (!class_exists("ProdiiAdmin")) {
 				'memberid' => isset($_REQUEST["prodii_memberid"]) ? $_REQUEST["prodii_memberid"] : 0,
 				'view' => isset($_REQUEST["prodii_view"]) ? $_REQUEST["prodii_view"] : 'tab-company'
 			);
-			//$content = $content."From prodii_shortcode_content <pre>".print_r($cp_data, true)."</pre>";
+
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, 'https://prodii.com/common/careerpages/php/careerpagesadminhandler.php'); 
 			curl_setopt($ch, CURLOPT_POST, count($cp_data));
@@ -538,6 +582,7 @@ if (!class_exists("ProdiiAdmin")) {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 			curl_setopt($ch, CURLOPT_FAILONERROR, true); 
 			$content = json_decode(curl_exec($ch), true);
+
 			if(curl_errno($ch)) {
 				$content = json_decode('cURL error ({$errno}):\n {$error_message}');
 			}

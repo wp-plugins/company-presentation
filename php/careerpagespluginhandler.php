@@ -4,16 +4,29 @@ error_reporting(E_ALL);
 header("content-type: text/html; Charset: utf-8");
 setlocale(LC_ALL, "en_GB");
 
+// Global variables
+$conn = openDBConnection();
 $action = $_POST['action']; 
-
 $templateini = array();
+$medias = Careerpages::getAllMedias();
+$templateimages = null;
+$skilllevels = Careerpages::getSkilllevels();
+$languagelevels = Careerpages::getLanguagelevels();
+
+
+
+
+//$action = $_POST['action']; 
+//$templateini = array();
+
+
 $templateini["key"] = $_POST['key'];
 $templateini["local"] = $_POST['local'];
 $templateini["subdir"] = $_POST['subdir'];
 $templateini["template"] = $_POST['template'];
 
-if ($action == "getTeamsHtml") {
-	echo json_encode(careerpages($action, "teams", $_POST['teams'], $_POST['breadcrumbs']));
+if ($action == "getCompanyHtml") {
+	echo json_encode(careerpages($action, "company", $_POST['company'], $_POST['breadcrumbs']));
 
 } elseif ($action == "getTeamHtml") {
 	echo json_encode(careerpages($action, "team", $_POST['team'], $_POST['breadcrumbs']));
@@ -52,18 +65,18 @@ function careerpages($action, $level, $ids, $breadcrumbs) {
 		$output = "cURL error ({$errno}):\n {$error_message}";
 	} else {
 		if ($templateini["local"]) {
-			require_once($templateini["templatepath"].'/php/careerpagestemplategui.php');
+			require_once($templateini["templatepath"].'/php/careerpagestemplate.php');
 			require_once('https://'.($templateini["subdir"] ? $templateini["subdir"].'.' : '').'prodii.com/common/careerpages/php/careerpageslibrary.php');
 
 			switch (ucfirst($level)) {
-				case "Teams":
-					$output = CareerpagesTemplateGui::getTeamsGui(json_decode($response, true));
+				case "Company":
+					$output = CareerpagesTemplate::getCompany(json_decode($response, true));
 					break;
 				case "Team":
-					$output = CareerpagesTemplateGui::getTeamGui(json_decode($response, true));
+					$output = CareerpagesTemplate::getTeam(json_decode($response, true));
 					break;
 				case "Profile":
-					$output = CareerpagesTemplateGui::getProfileGui(json_decode($response, true));
+					$output = CareerpagesTemplate::getProfile(json_decode($response, true));
 					break;
 			}						
 		} else {
