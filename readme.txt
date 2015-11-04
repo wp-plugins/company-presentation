@@ -3,7 +3,7 @@ Contributors: Ralph Rezende
 Tags: employee advocay, employee directory, employee list, employee profile, people, people profiles, team management, intranet, our teams, team management,  Team Member, team plugin, company map, company branches, prodii, career page, careerpage, About Us, about us plugin, branding, company profile, corporate profile, custom, customize, career, careerpages
 Requires at least: 4.0
 Tested up to: 4.3.1
-Stable tag: 4.1.0
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,7 +145,7 @@ So updating now means you have to change level parameter for the company view. N
 Now it is possible to show a company without teams.
 We made vanity system to show companies, teams and profiles with a pre selected template.
 Just write eg.:
-https://prodii.com/prodii/team1 - and you will see your Team 1 with one template
+https://prodii.com/prodii/development - and you will see your Team 1 with one template
 and
 https://prodii.com/prodii - and you will see your company with another template
 There are much more combinations, go there and explore Prodii.com 
